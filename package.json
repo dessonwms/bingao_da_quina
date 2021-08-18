@@ -6,5 +6,8 @@
   "license": "MIT",
   "devDependencies": {
     "git-commit-msg-linter": "^3.2.8"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
