@@ -1,0 +1,7 @@
+{
+  "name": "betting_system_roo_node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Desson Medeiros <dessonwms@gmail.com>",
+  "license": "MIT"
+}
