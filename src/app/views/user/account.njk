@@ -1,0 +1,33 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Minha conta</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>MINHA CONTA</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              MINHA CONTA
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+
+      <form id="form_register" method="POST" action="/users/account?_method=PUT">
+
+        {% include 'user/account_fields.njk' %}
+        <input type="hidden" name="id" value="{{user.id}}">
+
+        <button type="submit">Atualizar</button>
+      </form>
+
+{% endblock %}

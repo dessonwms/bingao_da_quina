@@ -1,0 +1,46 @@
+<div class="tab_info">
+  <h3>DADOS DO APOSTADOR</h3>
+  <p><span>Nome: </span>Desson</p>
+  <p><span>Referência: </span>Borracharia</p>
+  <p><span>Telefone: </span>(66) 99714-8689</p>
+</div>
+
+<div class="tab_info">
+  <h3>DADOS DA APOSTA</h3>
+  <div class="chosen_numbers">
+    <h4 class="title-bets"><span>Escolha os 10 números</span></h4>
+    <form method="POST" action="/bets/register">
+      <div class="bets_fields">
+        {# BLOCO DE NÚMEROS ADICIONADOS #}
+
+
+
+
+        {# <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div>
+        <div class="item invisible"><input class="input_number" type="text" name="number[]" value="" readonly></div> #}
+      </div>
+      <div class="bets_buttons">
+        <button class="resetFields" onclick="ManageBets.resetFields(event);">Limpar campos</button>
+        <button class="sendNumbers">Cadastrar Aposta</button>
+      </div>
+
+      <input type="hidden" name="userId" value="{{userId}}">
+    </form>
+  </div>
+</div>
+
+<div class="tab_info">
+  <div class="bets_numbers">
+      {# {% for number in numbersQuinary %}
+        <div class="item"><button value="{{number}}" onclick="SelectNumbersBets.apply(event, 'formatBRL')">{{number}}</button></div>
+      {% endfor %} #}
+  </div>
+</div>

@@ -1,0 +1,70 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Cadastrar sorteio da quina</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>CADASTRAR SORTEIO DA QUINA</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              CADASTRAR SORTEIO DA QUINA
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+
+  <form id="form_register" method="POST" action="/quinarys/register" onsubmit="return validateForm()">
+
+    {% include 'quinary/fields.njk' %}
+
+    <input type="hidden" name="bingoId" value="{{bingoId}}">
+
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <hr class="content_separator">
+
+  <div class="tab_table">
+    <h2>SORTEIOS DA QUINA</h2>
+    <table>
+      <tr>
+        <th colspan="2"></th>
+        <th colspan="5">DEZENAS</th>
+        <th colspan="1">AÇÕES</th>
+      </tr>
+      <tr>
+        <th>CONC.</th>
+        <th>DATA</th>
+        <th>1ª</th>
+        <th>2ª</th>
+        <th>3ª</th>
+        <th>4ª</th>
+        <th>5ª</th>
+        <th>EDITAR</th>
+      </tr>
+      <tr>
+        {% for register in quinarys %}
+          <tr>
+            <td class="detach">{{register.contest}}</td>
+            <td>{{register.contestdata}}</td>
+            <td class="td_ball"><div class="ball">{{register.ten_first}}</div></td>
+            <td class="td_ball"><div class="ball">{{register.ten_second}}</div></td>
+            <td class="td_ball"><div class="ball">{{register.ten_third}}</div></td>
+            <td class="td_ball"><div class="ball">{{register.ten_forth}}</div></td>
+            <td class="td_ball"><div class="ball">{{register.ten_fifth}}</div></td>
+            <td><a href="/quinarys/{{register.id}}/edit"><i class="material-icons">edit</i></a></td>
+          </tr>
+        {% endfor %}
+    </table>
+  </div>
+
+{% endblock %}

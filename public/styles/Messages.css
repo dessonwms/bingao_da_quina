@@ -1,0 +1,43 @@
+@keyframes hidemessage {
+  to {
+      top: -50px;
+      opacity: 0;
+  }
+}
+.msg_container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 10px;
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+
+  opacity: 1;
+  animation: hidemessage 400ms 5s ease-out forwards;
+}
+.msg_container .messages {
+  height: 60px;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.msg_container .messages span {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.msg_container .messages.error {
+  background: #c53030;
+  border: 1px solid #a0371d;
+}
+
+.msg_container .messages.success {
+  background: #11534c;
+}

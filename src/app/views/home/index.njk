@@ -1,0 +1,171 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Dashboard</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>DASHBOARD</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              DASHBOARD
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+
+          <div class="summary_box">
+            <div class="box">
+              <span class="price">R$ 5.650,00</span><br>
+              <span class="description">ARRECADAÇÃO TOTAL</span>
+              <i class="material-icons">attach_money</i>
+            </div>
+            <div class="box">
+              <span class="price">202</span><br>
+              <span class="description">APOSTADORES</span>
+              <i class="material-icons">people</i>
+            </div>
+            <div class="box">
+              <span class="price">R$ 5.650,00</span><br>
+              <span class="description">PREMIAÇÃO 1º LUGAR</span>
+              <i class="material-icons">emoji_events</i>
+
+            </div>
+            <div class="box">
+              <span class="price">R$ 5.650,00</span><br>
+              <span class="description">PREMIAÇÃO 2º LUGAR</span>
+              <i class="material-icons">emoji_events</i>
+
+            </div>
+          </div>
+
+          <div class="tab_table">
+            <h2>RANKING</h2>
+            <table>
+              <tr>
+                <th colspan="2">GANHADORES</th>
+                <th colspan="2">PREMIAÇÃO</th>
+              </tr>
+              <tr>
+                <th>ACERTOS</th>
+                <th>QTD</th>
+                <th>POR GANHADOR</th>
+                <th>TOTAL</th>
+              </tr>
+              <tr>
+              <tr>
+                <td>10</td>
+                <td>1</td>
+                <td>$R 6.000,00</td>
+                <td>$R 6.000,00</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>12</td>
+                <td>$R 67,00</td>
+                <td>$R 808,00</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>12</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>12</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>12</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>12</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>12</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>MENOR ACERTO</td>
+                <td>12</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="tab_table">
+            <h2>SORTEIOS QUINA</h2>
+            <table>
+              <tr>
+                <th colspan="2"></th>
+                <th colspan="5">DEZENAS</th>
+              </tr>
+              <tr>
+                <th>CONC.</th>
+                <th>DATA</th>
+                <th>01</th>
+                <th>02</th>
+                <th>03</th>
+                <th>04</th>
+                <th>05</th>
+              </tr>
+              <tr>
+              <tr>
+                <td>5579</td>
+                <td>25/08/21</td>
+                <td>25</td>
+                <td>10</td>
+                <td>09</td>
+                <td>11</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>5579</td>
+                <td>25/08/21</td>
+                <td>25</td>
+                <td>10</td>
+                <td>09</td>
+                <td>11</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>5579</td>
+                <td>25/08/21</td>
+                <td>25</td>
+                <td>10</td>
+                <td>09</td>
+                <td>11</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>5579</td>
+                <td>25/08/21</td>
+                <td>25</td>
+                <td>10</td>
+                <td>09</td>
+                <td>11</td>
+                <td>35</td>
+              </tr>
+            </table>
+          </div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+<div class="tab_table">
+    {% if not selectFieldSearch %}
+      <h2>LISTA DE APOSTADORES</h2>
+    {% elif selectFieldSearch == 'name' %}
+      <h2>RESULTADOS PARA: <span>" {{name}} "</span></h2>
+    {% elif selectFieldSearch == 'phone' %}
+      <h2>RESULTADOS PARA: <span>" {{phone}} "</span></h2>
+    {% endif %}
+    <table>
+      <tr>
+        <th colspan="2">INFORMAÇÕES</th>
+        <th colspan="2">AÇÕES</th>
+      </tr>
+      <tr>
+        <th>APOSTADOR</th>
+        <th>TELEFONE</th>
+        <th>EDITAR</th>
+        <th>CADASTRAR APOSTA</th>
+      </tr>
+        {% for register in punters %}
+          <tr>
+            <td class="detach">{{register.name}} - {{register.surname}}</td>
+            <td>{{register.phone}}</td>
+            <td><a href="/punters/{{register.id}}/edit"><i class="material-icons">edit</i></a></td>
+            <td><a href="/bets/{{register.id}}/register"><i class="material-icons">post_add</i></a></td>
+          </tr>
+        {% endfor %}
+
+        {% if not total %}
+        <tr>
+          <td class="no-register" colspan="4">Os dados informados não constam na base de dados.</td>
+        </tr>
+      {% endif %}
+    </table>
+  </div>
+
+  <div class="pagination_container">
+    <div class="pagination"
+      data-page={{pagination.page}}
+      data-total={{pagination.total}}
+      data-name="{{searchName}}"
+      data-phone="{{searchPhone}}"
+
+    ></div>
+  </div>
+
+

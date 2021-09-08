@@ -1,0 +1,37 @@
+/* PAGINATION */
+.pagination_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.table_container .header {
+  margin: 0;
+  align-self: start;
+}
+
+.table_container .pagination {
+  margin: 0;
+  align-self: end;
+  justify-self: center;
+}
+
+.pagination a,
+.pagination span {
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-right: 16px;
+  padding: 4px 10px;
+  border: 1px solid #25776e;
+}
+
+.pagination a:hover {
+  filter: brightness(0.7);
+}
+
+.pagination .current {
+  background: #25776e;
+}
+
+

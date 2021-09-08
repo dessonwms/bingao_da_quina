@@ -1,0 +1,128 @@
+
+
+/* ESTILOS USADOS PARA CENTRALIZAR FORMULÁRIO NA PÁGINA DE SIGNIN*/
+
+#container {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content{
+  justify-content: center;
+  align-items: center;
+
+
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+  max-width: 340px;
+}
+
+.content form{
+  width: 100%;
+  text-align: center;
+  border: 1px solid #2d2c3c;
+  padding: 0 10px;
+  padding-bottom: 20px;
+
+}
+
+.content form h1 {
+  font-size: 32px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #2d2c3c;
+  padding: 8px 0;
+}
+
+.content form a {
+  color: #f4ede8;
+  font-size: 16px;
+  display: block;
+  margin-top: 30px;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content form a i{
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.content form a:hover {
+  color: #25776e;
+}
+
+/* ESTILIZAÇÃO DO FORMULÁRIO */
+
+form label {
+  line-height: 35px;
+}
+
+form label:nth-child(n+2) {
+  margin-top: 16px;
+  display: block;
+}
+
+form input {
+  flex: 1;
+  color: #f4ede8;
+  background: transparent;
+  border: none;
+  height: 50px;
+}
+
+form input::placeholder {
+  color: #9b9792;
+}
+
+form input + input {
+  margin-top: 8px;
+}
+
+form select {
+  width: 100%;
+  height: 50px;
+  color: #9b9792;
+
+  /* retira estilização padrão do select */
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  /* trazer de volta o icone lateral */
+  border: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+      linear-gradient(to bottom, transparent 0%,transparent 100%);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: right .7em top 50%, 0 0;
+  background-size: .65em auto, 100%;
+}
+
+form .input_select {
+  width: 300px;
+}
+
+form button {
+  background: #20655d;
+  height: 56px;
+  border-radius: 10px;
+  border: 0;
+  padding: 0 16px;
+  color: #f4ede8;
+  width: 100%;
+  font-weight: bold;
+  margin-top: 48px;
+}
+
+form button:hover {
+  background: #25776e;
+}

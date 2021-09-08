@@ -1,0 +1,112 @@
+-- CRIA TABELA DE USUÁRIOS
+CREATE TABLE "users" (
+	"id" SERIAL PRIMARY KEY,
+	"name" text,
+	"surname" text,
+	"email" text UNIQUE NOT NULL,
+	"password" text NOT NULL,
+  "avatar" text,
+  "phone" text,
+	"level" int NOT NULL,
+  "seller_id" int,
+  "reset_token" text,
+  "reset_token_expires" text,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+-- CRIA TABELA DE NÍVEIS DE ACESSO DE USUÁRIOS
+CREATE TABLE "user_level" (
+	"id" SERIAL PRIMARY KEY,
+  "description" text NOT NULL,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+-- CRIA RELACIONAMENTO ENTRE AS TABELAS "USERS" & "USER_LEVEL"
+ALTER TABLE "users" ADD FOREIGN KEY ("level") REFERENCES "user_level" ("id");
+
+-- FUNÇÃO QUE GERA DE FORMA AUTOMÁTICA AS DATAS DO CAMPO "UPDATED_AT" DAS TABELAS
+CREATE FUNCTION trigger_set_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+	NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- CHAMA A FUNÇÃO QUE GERA DE FORMA AUTOMÁTICA AS DATAS DO CAMPO "UPDATED_AT" DAS TABELAS
+-- auto updated_at users
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON users
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+
+-- CRIA TABELA DE SESSÃO DE USUÁRIOS
+// CONNECT PG-SIMPLE TABLE (SESSION)
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+	"sess" json NOT NULL,
+	"expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+-- ADICIONA OS INDICES NA TABELA "SESSION"
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+CREATE INDEX "IDX_session_expire" ON "session" ("expire");
+
+-- CRIA TABELA DE BINGOS
+CREATE TABLE "bingos" (
+	"id" SERIAL PRIMARY KEY,
+	"edition" text,
+	"start_date" timestamp,
+  "end_date" timestamp,
+  "status" text,
+	"user_id" int NOT NULL,
+  "released_bets" text,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+-- CRIA TABELA DE SORTEIOS DA QUINA
+CREATE TABLE "quinarys" (
+	"id" SERIAL PRIMARY KEY,
+	"contest" int,
+  "contestdata" timestamp,
+  "ten_first" int,
+  "ten_second" int,
+  "ten_third" int,
+  "ten_forth" int,
+  "ten_fifth" int,
+	"bingo_id" int,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+-- CRIA A TABELA DE APOSTAS
+CREATE TABLE "betting" (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" integer,
+	"seller_id" integer,
+  "first_ten" integer,
+  "second_ten" integer,
+  "third_ten" integer,
+  "forth_ten" integer,
+  "fifth_ten" integer,
+  "sixth_ten" integer,
+  "seventh_ten" integer,
+  "eighth_ten" integer,
+  "ninth_ten" integer,
+  "tenth_ten" integer,
+  "payment_status" integer,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+
+/////////////////////////////////////////////////
+SCRIPTS DE SUPORTE
+
+// Reinicia contagem de autoincremente da tabela de usuários
+alter sequence users_id_seq restart with 1

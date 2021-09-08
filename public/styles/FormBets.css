@@ -1,0 +1,199 @@
+/* VISIBLE E INVISIBLE */
+@keyframes fadeout {
+  from {
+      opacity:1;
+  }
+  to {
+      opacity:0;
+  }
+}
+@-moz-keyframes fadeout { /* Firefox */
+  from {
+      opacity:1;
+  }
+  to {
+      opacity:0;
+  }
+}
+@-webkit-keyframes fadeout { /* Safari and Chrome */
+  from {
+      opacity:1;
+  }
+  to {
+      opacity:0;
+  }
+}
+@-o-keyframes fadeout { /* Opera */
+  from {
+      opacity:1;
+  }
+  to {
+      opacity: 0;
+  }
+}
+
+@keyframes fadein {
+  from {
+      opacity:0.5;
+  }
+  to {
+      opacity:1;
+  }
+}
+@-moz-keyframes fadein { /* Firefox */
+  from {
+      opacity:0.5;
+  }
+  to {
+      opacity:1;
+  }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+  from {
+      opacity:0.5;
+  }
+  to {
+      opacity:1;
+  }
+}
+@-o-keyframes fadein { /* Opera */
+  from {
+      opacity:0.5;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+.item_visible {
+  opacity: 0;
+  animation: fadein 400ms 0.005s ease-out forwards;
+  display: block;
+}
+
+.item_invisible {
+  opacity: 1;
+  animation: fadeout 400ms 0.1s ease-out forwards;
+  display: none;
+}
+/* FIM VISIBLE E INVISIBLE */
+
+
+#form_bets h3 {
+  font-weight: bold;
+  color: #4fa5b5;
+}
+#form_bets h4 {
+  margin: 3px 0;
+  text-align: center;
+  border-bottom: 1px solid #2d2c3c;
+  padding-bottom: 3px;
+  font-weight: bold;
+}
+
+#form_bets h3:nth-child(n+2) {
+  margin-top: 24px;
+}
+
+#form_bets p {
+  margin-bottom: 10px;
+}
+
+#form_bets .tab_info{
+  padding: 10px;
+  border: solid 1px #2d2c3c;
+}
+
+#form_bets p:nth-child(1n) {
+  margin-top: 10px;
+}
+
+#form_bets p span{
+  color: #4fa5b5;
+}
+
+#form_bets .bets_fields {
+  display: grid;
+  /* width: 100%; */
+  height: 30px;
+  grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+  padding-top: 3px;
+}
+
+#form_bets .bets_fields .item {
+  padding: 0 2px;
+}
+
+#form_bets .bets_fields input {
+  width: 100%;
+  border: solid 1px #2d2c3c;
+  background: rgba(86,186,202,0.05);
+  color: azure;
+  position: relative;
+  text-align: center;
+}
+
+
+
+#form_bets .bets_buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-top: 16px;
+}
+
+#form_bets .bets_buttons button{
+  border: none;
+  border-radius: 5px;
+  color: azure;
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+#form_bets .bets_buttons .sendNumbers{
+
+  background: #20655d;
+
+}
+
+#form_bets .bets_buttons .resetFields{
+  background: #994949;
+}
+
+#form_bets .bets_buttons button:nth-child(2n){
+  margin-left: 10px;
+}
+
+#form_bets .bets_numbers {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  margin-bottom: 10px;
+}
+
+#form_bets .bets_numbers .item {
+  margin: 10px 8px 0 0;
+}
+
+#form_bets .bets_numbers .item button {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background: darkgrey;
+  color: #2d2c3c;
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+#form_bets .bets_numbers .item button.notSelected {
+  background: darkgrey;
+}
+
+#form_bets .bets_numbers .item button.selected {
+  background: #20655d;
+  color: azure;
+}
+
+
+
+#form_bets .bets_numbers .item:nth-child(10n+10){
+  margin-right: 0px;
+}

@@ -1,0 +1,34 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Pesquisar Apostador</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>PESQUISAR APOSTADOR</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              PESQUISAR APOSTADOR
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+
+  <form id="form_register" method="GET" action="/punters/search" onsubmit="return validateForm()">
+
+    {% include 'punter/fields_search.njk' %}
+
+    <button type="submit">Pesquisar</button>
+  </form>
+
+  {% include 'punter/table.njk' %}
+
+{% endblock %}
