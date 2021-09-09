@@ -1,4 +1,4 @@
-// import BetsModel from '../models/Bets';
+import BetsModel from '../models/Bettings';
 import PunterModel from '../models/Punter';
 
 import format from '../../lib/utils';
@@ -50,7 +50,7 @@ const BetsController = {
           total: Math.ceil(total / limit),
           page,
         };
-        return response.render('bet/index', {
+        return response.render('betting/index', {
           punter: request.body,
           pagination,
           filter,
@@ -70,19 +70,34 @@ const BetsController = {
   async registerForm(request: any, response: any) {
     const userId = request.params.id;
 
-    console.log(`userId: ${userId}`);
+    // Busca os dados do usuário
+    const results = await PunterModel.find(request.params.id);
+    const punter = results.rows[0];
+    // Adiciona mascará de phone
+    punter.phone = format.phone(punter.phone);
 
-    return response.render(`bet/register`, { userId });
+    return response.render(`betting/register`, {
+      userId,
+      punter,
+    });
   },
   async post(request: any, response: any) {
     const { userId, number } = request.body;
 
-    console.log(`userId: ${userId}`);
+    // Salva no banco de dados
+    await BetsModel.create(request.body, request.session.userId);
 
-    console.log(`number: ${number[0]}`);
+    // Busca os dados do usuário
+    const results = await PunterModel.find(request.params.id);
+    const punter = results.rows[0];
+    // Adiciona mascará de phone
+    punter.phone = format.phone(punter.phone);
 
-    return response.render(`bet/register`, {
+    return response.render(`betting/receipt`, {
       userId,
+      numbers: number,
+      punter,
+      bets: request.body,
       success: 'Aposta cadastrada com sucesso!',
     });
   },

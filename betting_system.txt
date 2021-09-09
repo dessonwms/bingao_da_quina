@@ -85,7 +85,7 @@ CREATE TABLE "quinarys" (
 );
 
 -- CRIA A TABELA DE APOSTAS
-CREATE TABLE "betting" (
+CREATE TABLE "bettings" (
 	"id" SERIAL PRIMARY KEY,
 	"user_id" integer,
 	"seller_id" integer,
@@ -108,5 +108,11 @@ CREATE TABLE "betting" (
 /////////////////////////////////////////////////
 SCRIPTS DE SUPORTE
 
+// Pega o Serial Sequenci para reiniciar o autoincremente
+select pg_get_serial_sequence('NOME DA TABEL', 'CAMPO DA TABELA');
+
 // Reinicia contagem de autoincremente da tabela de usuários
-alter sequence users_id_seq restart with 1
+alter sequence public.NOMEDATABELA_CAMPODATABELA_seq restart with 1
+
+-- REINICIA A CONTAGEM DO ID E APAGA TODO O CONTEÚDO DA TABELA
+TRUNCATE TABLE bettings RESTART IDENTITY;

@@ -1,0 +1,52 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Dados da Aposta</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>DADOS DA APOSTA</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              DADOS DA APOSTA
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div id="form_bets">
+      <div class="tab_info">
+        <h3>DADOS DO APOSTADOR</h3>
+        <p><span>Nome: </span>{{punter.name}}</p>
+        <p><span>Referência: </span>{{punter.surname}}</p>
+        <p><span>Telefone: </span>{{punter.phone}}</p>
+        <p><span>Valor da aposta: </span>R$ 50,00</p>
+        <p><span>Status do pagamento: </span>{% if bets.payment_status == 'Y' %} Pago {% elif bets.payment_status == 'N' %} Pendente {% endif %}</p>
+
+      </div>
+
+      <div class="tab_info">
+        <h3>NÚMEROS ESCOLHIDOS</h3>
+        <div class="receipt_numbers">
+          {% for number in numbers %}
+            <span>{{ number }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="tab_info">
+        <h3>CADASTRAR NOVA APOSTA PARA ESSE APOSTADOR?</h3>
+        <a class="" href="/bettings/{{userId}}/register" >Nova Aposta</a>
+      </div>
+
+    </div>
+
+{% endblock %}

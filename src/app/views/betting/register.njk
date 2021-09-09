@@ -22,20 +22,11 @@
 
 {% block content %}
 
-  <div class="informative">
-    <div class="info">
-      <span class="material-icons">report_problem</span>
-      Selecione um apostador para cadastrar uma nova aposta!
+    <div id="form_bets">
+
+      {% include 'betting/fields.njk' %}
+
+      {# <button type="submit">Cadastrar</button> #}
     </div>
-  </div>
-
-  <form id="form_register" method="GET" action="/bets" onsubmit="return validateForm()">
-
-    {% include 'bet/fields_search.njk' %}
-
-    <button type="submit">Pesquisar</button>
-  </form>
-
-  {% include 'bet/table.njk' %}
 
 {% endblock %}

@@ -1,15 +1,15 @@
 import { Router } from 'express';
 
-import BetsController from '../app/controllers/BetsController';
+import BettingsController from '../app/controllers/BettingsController';
 
 const routes = Router();
 
 // Página de seleção do apostador
-routes.get('/', BetsController.selectPunter);
+routes.get('/', BettingsController.selectPunter);
 // Formulário de cadastro de Apostador
-routes.get('/:id/register', BetsController.registerForm);
+routes.get('/:id/register', BettingsController.registerForm);
 // Salva o Apostador no Banco
-routes.post('/register', BetsController.post);
+routes.post('/:id/register', BettingsController.post);
 
 // // // Formulário de Edição de Apostador
 // routes.get('/:id/edit', BetsController.edit);

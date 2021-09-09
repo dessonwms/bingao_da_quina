@@ -10,6 +10,21 @@ const format = {
     return phone;
   },
   date(timestamp: any) {
+    const monthExtensive = [
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro',
+    ];
+
     const date = new Date(timestamp);
 
     // O UTC mostra a data universal
@@ -27,6 +42,7 @@ const format = {
       iso: `${year}-${month}-${day}`,
       birthDay: `${day}/${month}`,
       ptbr: `${day}/${month}/${year}`,
+      extensive: `${day} de ${monthExtensive[date.getUTCMonth()]} de ${year}`,
     };
   },
 };

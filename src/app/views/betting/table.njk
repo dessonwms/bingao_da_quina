@@ -9,12 +9,13 @@
     <table>
       <tr>
         <th colspan="2">INFORMAÇÕES</th>
-        <th colspan="2">AÇÕES</th>
+        <th colspan="3">AÇÕES</th>
       </tr>
       <tr>
         <th>APOSTADOR</th>
         <th>TELEFONE</th>
         <th>EDITAR</th>
+        <th>VER APOSTAS</th>
         <th>CADASTRAR APOSTA</th>
       </tr>
         {% for register in punters %}
@@ -22,7 +23,8 @@
             <td class="detach">{{register.name}} - {{register.surname}}</td>
             <td>{{register.phone}}</td>
             <td><a href="/punters/{{register.id}}/edit"><i class="material-icons">edit</i></a></td>
-            <td><a href="/bets/{{register.id}}/register"><i class="material-icons">post_add</i></a></td>
+            <td><a href="/punters/{{register.id}}/view_bets"><i class="material-icons">visibility</i></a></td>
+            <td><a href="/bettings/{{register.id}}/register"><i class="material-icons">post_add</i></a></td>
           </tr>
         {% endfor %}
 

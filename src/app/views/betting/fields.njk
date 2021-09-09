@@ -1,0 +1,69 @@
+  <form method="POST" action="/bettings/{{userId}}/register" onsubmit="ManageBets.validateForm(event);">
+    <div class="tab_info">
+      <h3>DADOS DO APOSTADOR</h3>
+      <p><span>Nome: </span>{{punter.name}}</p>
+      <p><span>Referência: </span>{{punter.surname}}</p>
+      <p><span>Telefone: </span>{{punter.phone}}</p>
+      <p><span>Valor da aposta: </span>R$ 50,00</p>
+
+      {# STATUS DO PAGAMENTO #}
+      <label for="name">STATUS DO PAGAMENTO</label>
+      <div class="imput_container limit_container">
+        <div class="imput_radio">
+            <div class="element">
+              <span>
+              <input
+                type="radio"
+                name="payment_status"
+                value="Y"
+                id="paid_out"
+                {% if bingo.payment_status == 'Y' %} checked {% endif %}
+              >
+            </span>
+            <span><label for="paid_out"> Pago</label></span>
+            </div>
+
+            <div class="element">
+              <span>
+                <input
+                  type="radio"
+                  name="payment_status"
+                  value="N"
+                  id="payment_pending"
+                  {% if bingo.payment_status == 'N' or not bingo.payment_status %} checked {% endif %}
+                >
+              </span>
+              <span><label for="payment_pending"> Pendente</label></span>
+            </div>
+        </div>
+      </div>
+      {# FIM STATUS DO PAGAMENTO #}
+
+    </div>
+
+    <div class="tab_info">
+      <h3>DADOS DA APOSTA</h3>
+      <div class="chosen_numbers">
+        <h4 class="title-bets"><span>Escolha os 10 números</span></h4>
+
+          <div class="bets_fields">
+            {# BLOCO DE NÚMEROS ADICIONADOS AUTOMATICAMENTE #}
+          </div>
+          <div class="bets_buttons">
+            <button class="resetFields" onclick="ManageBets.resetFields(event);">Limpar campos</button>
+            <button class="sendNumbers">Cadastrar Aposta</button>
+          </div>
+
+          <input type="hidden" name="userId" value="{{userId}}">
+
+      </div>
+    </div>
+  </form>
+
+<div class="tab_info">
+  <div class="bets_numbers">
+      {# {% for number in numbersQuinary %}
+        <div class="item"><button value="{{number}}" onclick="SelectNumbersBets.apply(event, 'formatBRL')">{{number}}</button></div>
+      {% endfor %} #}
+  </div>
+</div>

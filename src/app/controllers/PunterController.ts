@@ -1,4 +1,5 @@
 import PunterModel from '../models/Punter';
+import BetsModel from '../models/Bettings';
 
 import format from '../../lib/utils';
 
@@ -280,6 +281,31 @@ const PunterController = {
     };
 
     PunterModel.paginate(params);
+  },
+  async viewBets(request: any, response: any) {
+    // Busca os dados do usuário
+    let results = await PunterModel.find(request.params.id);
+    const punter = results.rows[0];
+    // Adiciona mascará de phone
+    punter.phone = format.phone(punter.phone);
+
+    console.log(punter.id);
+
+    // Retorna a lista de apostas do apostador
+    results = await BetsModel.all(punter.id);
+    let bets = results.rows;
+
+    const usersPromise = bets.map(async bet => {
+      // eslint-disable-next-line no-param-reassign
+      bet.created_at = format.date(bet.created_at).extensive;
+      return bet;
+    });
+    bets = await Promise.all(usersPromise);
+
+    return response.render('punter/view_bets', {
+      punter,
+      bets,
+    });
   },
 };
 

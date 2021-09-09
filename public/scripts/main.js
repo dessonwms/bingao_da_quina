@@ -431,12 +431,17 @@ const ManageBets = {
     // Remove o item
     ManageBets.betsFields.removeChild(itemNumber);
   },
-  changeTitle(msg) {
+  changeTitle(msg, attribute = '') {
     const titleBets = document.querySelector('.title-bets');
     const spanRemove = document.querySelector('.title-bets span');
     titleBets.removeChild(spanRemove);
 
     const spanCreate = document.createElement('span');
+
+    if (attribute !== '') {
+      spanCreate.classList.add(attribute);
+    }
+
     const textElement = document.createTextNode(msg);
     spanCreate.appendChild(textElement);
     titleBets.appendChild(spanCreate);
@@ -455,12 +460,18 @@ const ManageBets = {
 
     if (qtdFields.length === 0) {
       msg = `Escolha os 10 números.`;
+      attribute = 'msg-error';
     } else if (qtdFields.length === 1) {
       msg = `Foi escolhido ${qtdFields.length} número.`;
-    } else if (qtdFields.length > 1 && qtdFields.length <= 10) {
+      attribute = 'msg-default';
+    } else if (qtdFields.length > 1 && qtdFields.length < 10) {
       msg = `Foram escolhidos ${qtdFields.length} números.`;
+      attribute = 'msg-default';
+    } else if (qtdFields.length === 10) {
+      msg = `Clique em "CADASTRAR APOSTA" para finalizar`;
+      attribute = 'msg-success';
     }
-    ManageBets.changeTitle(msg);
+    ManageBets.changeTitle(msg, attribute);
   },
   resetFields(event) {
     const { betsFields } = ManageBets;
@@ -478,6 +489,24 @@ const ManageBets = {
     ManageBets.changeTitle('Escolha os 10 números');
 
     event.preventDefault();
+    return true;
+  },
+  validateForm(event) {
+    const qtdFields = document.querySelectorAll('.input_number');
+
+    if (qtdFields.length < 10) {
+      console.log(qtdFields.length);
+      console.log('Para cadastrar a aposta você deve selecionar os 10 números');
+
+      ManageBets.changeTitle(
+        'Para cadastrar a aposta você deve selecionar os 10 números',
+        'msg-error',
+      );
+
+      event.preventDefault();
+      return true;
+    }
+
     return true;
   },
 };

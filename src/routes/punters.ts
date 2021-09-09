@@ -15,6 +15,9 @@ routes.get('/search', PunterController.searchForm);
 // Realiza o filtro da pesquisa
 // routes.post('/search', PunterController.search); // Não preicsou
 
+// Visualiza as apostas do apostador
+routes.get('/:id/view_bets', PunterController.viewBets);
+
 // // Formulário de Edição de Apostador
 routes.get('/:id/edit', PunterController.edit);
 // // Atualiza o Apostador no banco

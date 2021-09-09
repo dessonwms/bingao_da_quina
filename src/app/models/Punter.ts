@@ -76,8 +76,6 @@ const PunterModel = {
       return true;
     });
 
-    console.log(query);
-
     await db.query(query);
   },
   async paginate(params: any) {
