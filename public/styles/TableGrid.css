@@ -1,0 +1,97 @@
+/* grid testes */
+.table {
+  border: solid 1px #2d2c3c;
+  margin: 32px 0 5px 0;
+}
+
+.table h2 {
+  font-size: 20px;
+  color: #4fa5b5;
+  padding: 8px 0;
+  margin-left: 1.5%;
+}
+
+.grid div{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid #2d2c3c;
+  border-right: 1px solid #2d2c3c;
+  text-align: center;
+}
+
+.grid div:nth-child(2n+2) {
+  background-color: rgba(86,186,202,0.03);
+}
+
+.grid div span {
+  padding: 5px 4px;
+  border-left: 1px solid #2d2c3c;
+  border-bottom: 1px solid #2d2c3c;
+}
+
+.grid .tr_th_first{
+  background-color: rgba(86,186,202,0.2);
+  font-weight: bold;
+}
+
+.grid .tr_th_second{
+  background-color: rgba(86,186,202,0.07);
+  font-weight: bold;
+}
+
+.grid .grid_first {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.grid .grid_second {
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+/*
+<div class="table">
+  <h2>RANKING</h2>
+  <div class="grid">
+    <div>
+      <span class="grid_first tr_th_first">GANHADORES</span>
+      <span class="grid_second tr_th_first">PREMIAÇÃO</span>
+    </div>
+
+    <div>
+      <span class="tr_th_second">ACERTOS</span>
+      <span class="tr_th_second">QTD</span>
+      <span class="tr_th_second">GANHADOR</span>
+      <span class="tr_th_second">TOTAL</span>
+    </div>
+
+    <div>
+      <span>10</span>
+      <span>1</span>
+      <span>R$ 67,00</span>
+      <span>R$ 808,00</span>
+    </div>
+
+    <div>
+      <span>10</span>
+      <span>1</span>
+      <span>R$ 67,00</span>
+      <span>R$ 808,00</span>
+    </div>
+
+    <div>
+      <span>10</span>
+      <span>1</span>
+      <span>R$ 67,00</span>
+      <span>R$ 808,00</span>
+    </div>
+
+    <div>
+      <span>10</span>
+      <span>1</span>
+      <span>R$ 67,00</span>
+      <span>R$ 808,00</span>
+    </div>
+  </div>
+</div>
+*/

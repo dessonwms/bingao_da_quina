@@ -1,0 +1,96 @@
+<label for="name">NOME COMPLETO</label>
+<div class="imput_container">
+  <i class="material-icons">person</i>
+  <input
+    type="text"
+    name="name"
+    required
+    value="{{ user.name}}"
+    placeholder="Digite o nome"
+  >
+  <span class="error"></span>
+</div>
+
+<label for="name">CELULAR</label>
+<div class="imput_container">
+  <i class="material-icons">phone</i>
+  <input
+    type="tel"
+    name="phone"
+    value="{{ user.phone }}"
+    required
+    maxlength="15"
+    pattern="\(\d{2}\) \d{5}-\d{4}"
+    placeholder="Ex: (00) 00000-0000"
+    oninput="Mask.apply(this, 'phone')"
+    onkeydown="Mask.apply(this, 'phone')"
+  >
+  <span class="error"></span>
+</div>
+
+<label for="name">E-MAIL</label>
+<div class="imput_container">
+  <i class="material-icons">mail_outline</i>
+  <input
+    type="email"
+    name="email"
+    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+    required
+    value="{{ user.email }}"
+    placeholder="Digite o e-mail"
+  >
+  <span class="error"></span>
+</div>
+
+
+  <label for="name">NÍVEL DO USUÁRIO</label>
+  <div class="imput_container input_select">
+    <i class="material-icons">admin_panel_settings</i>
+    <select name="level" required>
+      <option value="" >Selecione</option>
+      {% for level in levels %}
+        <option value="{{ level.id }}" {% if user.level == level.id %} selected {% endif %}>{{ level.description }}</option>
+      {% endfor %}
+    </select>
+    <span class="error"></span>
+  </div>
+
+{# {% if not user.id %}
+<label for="name">SENHA</label>
+<div class="imput_container">
+  <i class="material-icons">lock_open</i>
+  <input
+    type="password"
+    name="password"
+    required
+    {% if not user.id %}
+      placeholder="Digite a senha"
+    {% else %}
+      placeholder="Digite sua senha para atualizar seu cadastro"
+    {% endif %}
+
+    onclick="Validate.apply(this, 'verifyPasswordRepeat')"
+    oninput="Validate.apply(this, 'verifyPasswordRepeat')"
+
+  >
+  <span class="error"></span>
+  <span class="error_repeat"></span>
+</div>
+{% endif %}
+
+{% if not user.id %}
+  <label for="name">REPETIR SENHA</label>
+  <div class="imput_container">
+    <i class="material-icons">lock_open</i>
+    <input
+      type="password"
+      name="passwordRepeat"
+      required
+      placeholder="Repita a senha"
+      onclick="Validate.apply(this, 'verifyPasswordRepeat')"
+      oninput="Validate.apply(this, 'verifyPasswordRepeat')"
+    >
+    <span class="error"></span>
+    <span class="error_repeat"></span>
+  </div>
+{% endif %} #}

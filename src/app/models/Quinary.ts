@@ -8,6 +8,9 @@ const QuinaryModel = {
     ORDER BY updated_at DESC
     `);
   },
+  allTen() {
+    return db.query(`SELECT * FROM quinarys_ten ORDER BY ten ASC`);
+  },
   async find(id: any) {
     return db.query('SELECT * FROM quinarys WHERE id = $1', [id]);
   },

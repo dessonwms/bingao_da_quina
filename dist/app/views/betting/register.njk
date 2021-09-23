@@ -1,0 +1,32 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Cadastrar Aposta</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>CADASTRAR APOSTA</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              CADASTRAR APOSTA
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div id="form_bets">
+
+      {% include 'betting/fields.njk' %}
+
+      {# <button type="submit">Cadastrar</button> #}
+    </div>
+
+{% endblock %}

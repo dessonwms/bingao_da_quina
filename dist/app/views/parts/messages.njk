@@ -1,0 +1,17 @@
+{% if error %}
+  <div class="msg_container">
+    <div class="messages error">
+      <span class="material-icons">report_problem</span>
+      {{ error }}
+    </div>
+  </div>
+{% endif %}
+
+{% if success %}
+  <div class="msg_container">
+    <div class="messages success">
+      <span class="material-icons">check</span>
+      {{ success }}
+    </div>
+  </div>
+{% endif %}

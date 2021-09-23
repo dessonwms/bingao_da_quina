@@ -1,0 +1,31 @@
+<div class="tab_table">
+  <h2>EDIÇÃO ATUAL</h2>
+  <table>
+    <tr>
+      <th>EDIÇÃO</th>
+      <th>INICIO</th>
+      {% if bingo.end_date %}
+        <th>TÉRMINO</th>
+      {% endif %}
+      <th>STATUS</th>
+      <th>RESUMO</th>
+    </tr>
+    <tr>
+    <tr>
+      <td>{{bingo.edition}} ª</td>
+      <td>{{bingo.start_date}}</td>
+      {% if bingo.end_date %}
+        <td>{{bingo.end_date}}</td>
+      {% endif %}
+      <td
+        {% if bingo.status == "ATIVO" %}
+          class="active"
+        {% else %}
+          class="finished"
+        {% endif %}
+      >{{bingo.status}}
+      </td>
+      <td><a href="/bingos/{{bingo.id}}/download">Baixar PDF</a></td>
+    </tr>
+  </table>
+</div>

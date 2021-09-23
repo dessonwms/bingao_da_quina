@@ -45,6 +45,20 @@ const format = {
       extensive: `${day} de ${monthExtensive[date.getUTCMonth()]} de ${year}`,
     };
   },
+  formatPrice(price: any) {
+    let priceFormatted;
+
+    if (price) {
+      priceFormatted = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(price);
+    } else {
+      priceFormatted = 0;
+    }
+
+    return priceFormatted;
+  },
 };
 
 export default format;

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../styles/GlobalStyles.css">
+  <link rel="stylesheet" href="../../styles/SignInStyles.css">
+  <link rel="stylesheet" href="../../styles/messages.css">
+
+  <title>SignIn</title>
+</head>
+<body>
+  {# INCLUI MENSAGEM DE ALERTAS #}
+  {% include "parts/messages.njk" %}
+
+  <div id="container">
+    <div class="content">
+      <form method="POST" action="/users/login">
+        <h1>LOGIN</h1>
+
+        <div class="imput_container">
+          <i class="material-icons">mail_outline</i>
+          <input type="email" name="email" value="{{user.email}}" placeholder="Digite seu E-mail">
+          <span class="error"></span>
+        </div>
+        <div class="imput_container">
+          <i class="material-icons">lock_open</i>
+          <input type="password" name="password" placeholder="Digite sua Senha">
+          <span class="error"></span>
+        </div>
+
+        <button type="submit">Entrar</button>
+
+        <a href="forgot">Esqueci a senha</a>
+      </form>
+    </div>
+  </div>
+
+  <script src="../../scripts/main.js"></script>
+</body>
+</html>
+

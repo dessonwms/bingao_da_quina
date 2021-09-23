@@ -1,0 +1,52 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Cadastrar novo usuário</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>LISTA DE USUÁRIOS</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              LISTA DE USUÁRIOS
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+          <div class="tab_table">
+            <h2>SYSTEM ADMINISTRATORS</h2>
+            <table>
+              <tr>
+                <th colspan="4">DADOS</th>
+                <th colspan="1">AÇÕES</th>
+              </tr>
+              <tr>
+                <th width="100">ID</th>
+                <th>NOME</th>
+                <th>E-MAIL</th>
+                <th>TELEFONE</th>
+                <th>EDITAR</th>
+              </tr>
+              <tr>
+                {% for user in users %}
+                <tr>
+                  <td>{{user.id}}</td>
+                  <td>{{user.name}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.phone}}</td>
+                  <td><a href="/users/{{user.id}}/edit"><i class="material-icons">edit</i></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+          </div>
+
+
+{% endblock %}

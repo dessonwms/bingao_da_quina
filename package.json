@@ -5,15 +5,29 @@
   "author": "Desson Medeiros <dessonwms@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --watch src/ src/server.ts"
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
+    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --watch src/ src/server.ts",
+    "docker:start": "docker start e42816676bc8"
   },
   "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/connect-pg-simple": "^4.2.4",
     "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
+    "@types/html-pdf": "^2.2.1",
+    "@types/method-override": "^0.0.32",
     "@types/nodemailer": "^6.4.4",
     "@types/nunjucks": "^3.1.5",
+    "@types/pg": "^8.6.1",
+    "@types/puppeteer": "^5.4.4",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -26,18 +40,15 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@types/bcryptjs": "^2.4.2",
-    "@types/connect-pg-simple": "^4.2.4",
-    "@types/express-session": "^1.17.4",
-    "@types/method-override": "^0.0.32",
-    "@types/pg": "^8.6.1",
     "bcryptjs": "^2.4.3",
     "connect-pg-simple": "^6.2.1",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "html-pdf": "^3.0.1",
     "method-override": "^3.0.0",
     "nodemailer": "^6.6.3",
     "nunjucks": "^3.2.3",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "puppeteer": "^10.2.0"
   }
 }

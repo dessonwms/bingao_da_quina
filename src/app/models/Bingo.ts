@@ -5,11 +5,36 @@ const BingoModel = {
     return db.query(`
     SELECT * FROM bingos
     ORDER BY updated_at DESC
-    LIMIT 10
     `);
   },
+  async find(id: any) {
+    return db.query('SELECT * FROM bingos WHERE id = $1', [id]);
+  },
+  async create(data: any, userId: any) {
+    try {
+      const query = `
+      INSERT INTO bingos (
+        edition,
+        start_date,
+        status,
+        released_bets,
+        user_id
+    ) VALUES ( $1, $2, $3, $4, $5 )
+    RETURNING id
+    `;
+
+      const values = [data.edition, data.start_date, 'ATIVO', 'B', userId];
+
+      const results = await db.query(query, values);
+
+      return results.rows[0].id;
+    } catch (err) {
+      console.log(`Error: ${err}`);
+      return `Error: ${err}`;
+    }
+  },
   async findActive() {
-    return db.query("SELECT * FROM bingos WHERE status = 'ATIVO'");
+    return db.query('SELECT * FROM bingos');
   },
   async update(id: any, fields: any) {
     let query = 'UPDATE bingos SET';

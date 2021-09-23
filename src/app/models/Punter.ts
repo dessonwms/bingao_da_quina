@@ -87,7 +87,7 @@ const PunterModel = {
 
     if (filter) {
       if (selectFieldSearch === 'name') {
-        filterQuery = `${query} AND name ILIKE '%${filter}%'`;
+        filterQuery = `${query} AND name ILIKE '%${filter}%' OR surname ILIKE '%${filter}%'`;
       } else if (selectFieldSearch === 'phone') {
         filterQuery = `${query} AND phone ILIKE '${filter}'`;
       }
@@ -98,7 +98,7 @@ const PunterModel = {
     // nullif( (select count(*) from users where level != 1 and subscriber_id = 1234), 0) AS count_books,
     // nullif( (select count(*) from selected_media where _type='movie' and subscriber_id = 1234), 0) AS count_movies ;
 
-    query = `SELECT *, ${totalQuery} FROM users WHERE level != 1 ${filterQuery} LIMIT $1 OFFSET $2`;
+    query = `SELECT *, ${totalQuery} FROM users WHERE level != 1 ${filterQuery} ORDER BY created_at DESC LIMIT $1 OFFSET $2`;
 
     db.query(query, [limit, offset], (err, results) => {
       if (err) throw new Error('Database Error!');

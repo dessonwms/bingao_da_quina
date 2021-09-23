@@ -3,11 +3,11 @@ CREATE TABLE "users" (
 	"id" SERIAL PRIMARY KEY,
 	"name" text,
 	"surname" text,
-	"email" text UNIQUE NOT NULL,
-	"password" text NOT NULL,
+	"email" text,
+	"password" text,
   "avatar" text,
   "phone" text,
-	"level" int NOT NULL,
+	"level" int,
   "seller_id" int,
   "reset_token" text,
   "reset_token_expires" text,
@@ -63,7 +63,7 @@ CREATE TABLE "bingos" (
 	"start_date" timestamp,
   "end_date" timestamp,
   "status" text,
-	"user_id" int NOT NULL,
+	"user_id" int,
   "released_bets" text,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
@@ -87,6 +87,7 @@ CREATE TABLE "quinarys" (
 -- CRIA A TABELA DE APOSTAS
 CREATE TABLE "bettings" (
 	"id" SERIAL PRIMARY KEY,
+  "bingo_id" integer,
 	"user_id" integer,
 	"seller_id" integer,
   "first_ten" integer,
@@ -100,6 +101,25 @@ CREATE TABLE "bettings" (
   "ninth_ten" integer,
   "tenth_ten" integer,
   "payment_status" integer,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+-- CRIA TABELA DE GANHADORES
+CREATE TABLE "winners" (
+	"id" SERIAL PRIMARY KEY,
+	"bingo_id" int,
+  "user_id" int,
+  "betting_id" int,
+  "number_hits" int,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+-- CRIA TABELA COM TODAS AS 80 DEZENAS DA QUINA
+CREATE TABLE "quinarys_ten" (
+	"id" SERIAL PRIMARY KEY,
+	"ten" int,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
 );

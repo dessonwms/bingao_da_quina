@@ -1,0 +1,82 @@
+  <div class="SearchName
+                          {% if selectFieldSearch == 'name' and selectFieldSearch != 'phone' %}
+                              visible
+                          {% elif selectFieldSearch == 'phone' %}
+                              invisible
+                          {% endif %}
+                          ">
+    <label for="name">NOME OU REFERÊNCIA</label>
+    <div class="imput_container">
+      <i class="material-icons">person</i>
+      <input
+        type="text"
+        name="searchName"
+        required
+        {% if selectFieldSearch == 'phone' %} disabled {% endif %}
+        value="{{ name }}"
+        placeholder="Digite o nome ou referência"
+      >
+      <span class="error"></span>
+    </div>
+  </div>
+
+  <div class="SearchPhone
+                          {% if selectFieldSearch == 'phone' %}
+                              visible
+                          {% else %}
+                              invisible
+                          {% endif %}">
+    <label for="name">CELULAR</label>
+    <div class="imput_container">
+      <i class="material-icons">phone</i>
+      <input
+        type="tel"
+        name="searchPhone"
+        required
+        {% if selectFieldSearch != 'phone' %} disabled {% endif %}
+        value="{{ phone }}"
+        maxlength="15"
+        pattern="\(\d{2}\) \d{5}-\d{4}"
+        placeholder="Ex: (00) 00000-0000"
+        oninput="Mask.apply(this, 'phone')"
+        onkeydown="Mask.apply(this, 'phone')"
+      >
+      <span class="error"></span>
+    </div>
+  </div>
+
+  <div class="SearchRadio">
+    <label for="name">TIPO DE PESQUISA</label>
+    <div class="imput_container limit">
+      <div class="imput_radio">
+          <div class="element">
+            <span>
+            <input
+              type="radio"
+              name="selectFieldSearch"
+              value="name"
+              id="released_active"
+
+              {% if selectFieldSearch == 'name' or not selectFieldSearch %} checked {% endif %}
+              onclick="SelectSearch.apply(this, 'radioType')"
+            >
+          </span>
+          <span><label for="released_active"> Nome ou referência</label></span>
+          </div>
+
+          <div class="element">
+            <span>
+              <input
+                type="radio"
+                name="selectFieldSearch"
+                value="phone"
+                id="released_inactive"
+                {% if selectFieldSearch == 'phone' %} checked {% endif %}
+                onclick="SelectSearch.apply(this, 'radioType')"
+              >
+            </span>
+            <span><label for="released_inactive"> Telefone</label></span>
+          </div>
+      </div>
+    </div>
+  </div>

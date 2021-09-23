@@ -1,0 +1,71 @@
+.table_summary {
+  border: solid 1px #2d2c3c;
+  margin: 32px 0 5px 0;
+}
+
+.table_summary h2 {
+  font-size: 20px;
+  color: #4fa5b5;
+  padding: 8px 0;
+  margin-left: 1.5%;
+}
+.table_summary h2 span {
+  color: azure;
+}
+
+.table_summary table{
+  width: 100%;
+}
+
+.table_summary table, th, td {
+  border: 1px solid #2d2c3c;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+.table_summary table tr:nth-child(1){
+  background-color: rgba(86,186,202,0.1);
+}
+
+.table_summary tr th {
+  background-color: rgba(86,186,202,0.09);
+}
+
+.table_summary table tr td:nth-child(2n+2) {
+  background-color: rgba(86,186,202,0.03);
+}
+
+.table_summary tr td {
+  text-align: center;
+}
+
+.table_summary tr.detach {
+  color: #4fa5b5;
+  letter-spacing: 0.08em;
+  font-weight: bold;
+}
+
+.table_summary tr td span.detach_small {
+  color: azure;
+  letter-spacing: 0.08em;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.align_right {
+  text-align: right;
+}
+.adm_fee {
+  background-color: rgba(86,186,202,0.4);
+}
+.value_bet {
+  background-color: rgba(86,186,202,0.2);
+}
+.total_collection {
+  background-color: rgba(86,186,202,0.6);
+}
+.format_font {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+

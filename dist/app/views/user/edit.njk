@@ -1,0 +1,33 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Atualizar dados do usuário</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>ATUALIZAR DADOS DO USUÁRIO</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              ATUALIZAR DADOS DO USUÁRIO
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+
+      <form id="form_register" method="POST" action="/users?_method=PUT">
+
+        {% include 'user/fields.njk' %}
+        <input type="hidden" name="id" value="{{user.id}}">
+
+        <button type="submit">Atualizar</button>
+      </form>
+
+{% endblock %}

@@ -5,6 +5,7 @@ import bingos from './bingos';
 import punters from './punters';
 import quinary from './quinary';
 import bettings from './bettings';
+import reports from './reports';
 import HomeController from '../app/controllers/HomeController';
 import Session from '../app/middlewares/session';
 
@@ -27,5 +28,8 @@ routes.use('/quinarys', quinary);
 
 // Bets
 routes.use('/bettings', bettings);
+
+// Reports
+routes.use('/reports', reports);
 
 export default routes;

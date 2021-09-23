@@ -1,0 +1,47 @@
+<div class="tab_table" id="search">
+    <h2>LISTA DE APOSTADORES</h2>
+    <table class="winner_result"
+      data-noduplicates={{noDuplicates}}
+    >
+      <tr class="detach">
+        <th></th>
+        <th>NOME</th>
+        <th colspan="10">DEZENAS</th>
+        <th>ACERTOS</th>
+      </tr>
+
+      {% for betting in bettings %}
+      <tr>
+        <td>{{betting.bts_id}}</td>
+        <td class="detach" style="text-align: left;">
+          {{betting.name}}
+          {% if betting.surname %}
+            - {{betting.surname}}
+          {% endif %}
+        </td>
+        <td class="number">{{betting.first_ten}}</td>
+        <td class="number">{{betting.second_ten}}</td>
+        <td class="number">{{betting.third_ten}}</td>
+        <td class="number">{{betting.forth_ten}}</td>
+        <td class="number">{{betting.fifth_ten}}</td>
+        <td class="number">{{betting.sixth_ten}}</td>
+        <td class="number">{{betting.seventh_ten}}</td>
+        <td class="number">{{betting.eighth_ten}}</td>
+        <td class="number">{{betting.ninth_ten}}</td>
+        <td class="number">{{betting.tenth_ten}}</td>
+        <td class="detach">{{betting.number_hits}}</td>
+      </tr>
+      {% endfor %}
+
+    </table>
+  </div>
+
+  <div class="pagination_container">
+    <div class="pagination"
+      data-page={{pagination.page}}
+      data-total={{pagination.total}}
+      data-name="{{searchName}}"
+      data-phone="{{searchPhone}}"
+
+    ></div>
+  </div>

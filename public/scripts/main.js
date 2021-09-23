@@ -3,13 +3,13 @@
 // --
 // ADICIONA DESTAQUE A OPÇÃO ATIVA DO MENU
 // --
-const linksMenu = document.querySelectorAll('.default_menu .item_menu');
+const linksMenu = document.querySelectorAll('.default_menu a');
 
 // eslint-disable-next-line no-restricted-globals
 const currentPageURL = location.pathname;
 
 Array.from(linksMenu).map(async item => {
-  const targetURL = item.children[1].href;
+  const targetURL = item.href;
 
   if (currentPageURL !== '/') {
     if (targetURL.indexOf(currentPageURL) !== -1) {
@@ -131,6 +131,9 @@ function ValidateField(field) {
       number: {
         valueMissing: 'Este campo é obrigatório',
         rangeOverflow: 'Digite um número válido',
+      },
+      radio: {
+        valueMissing: 'Você deve selecionar uma das opções',
       },
       // Adicionar mensagem de tratamneto para cada tipo de campo do formulário
     };
@@ -331,11 +334,13 @@ function createPagination(pagination) {
     } else if (page === pageDataSet) {
       elements += `<span class="current">${page}</span>`;
     } else if (name) {
-      elements += `<a href="?page=${page}&searchName=${name}&selectFieldSearch=name">${page}</a>`;
+      elements += `<a href="?page=${page}&searchName=${name}&selectFieldSearch=name#search">${page}</a>`;
     } else if (phone) {
-      elements += `<a href="?page=${page}&searchPhone=${phone}&selectFieldSearch=phone">${page}</a>`;
+      elements += `<a href="?page=${page}&searchPhone=${phone}&selectFieldSearch=phone#search">${page}</a>`;
+    } else if (filter) {
+      elements += `<a class="item" href="?page=${page}&filter=${filter}#search">${page}</a>`;
     } else {
-      elements += `<a class="item" href="?page=${page}&filter=${filter}">${page}</a>`;
+      elements += `<a class="item" href="?page=${page}#search">${page}</a>`;
     }
   }
 
@@ -495,9 +500,6 @@ const ManageBets = {
     const qtdFields = document.querySelectorAll('.input_number');
 
     if (qtdFields.length < 10) {
-      console.log(qtdFields.length);
-      console.log('Para cadastrar a aposta você deve selecionar os 10 números');
-
       ManageBets.changeTitle(
         'Para cadastrar a aposta você deve selecionar os 10 números',
         'msg-error',
@@ -510,3 +512,98 @@ const ManageBets = {
     return true;
   },
 };
+
+// --
+// ADICIONA OPÇÃO DE DROPDOWN EM MENUS
+// --
+
+const MsgInput = {
+  apply(event, func) {
+    setTimeout(() => {
+      // eslint-disable-next-line no-param-reassign
+      input = MsgInput[func](event);
+    }, 1);
+  },
+  setMsg(event) {
+    // Input clicado
+    const field = event.target;
+
+    // Receptor da mensagem
+    const messageReceiver = document.querySelector(
+      '.informative .info_input i',
+    );
+
+    // Box Informativo
+    const boxParent = document.querySelector(
+      '.informative .info_input',
+    ).parentNode;
+
+    // Exibe o box da mensagem
+    if (boxParent.classList.contains('invisible_msg')) {
+      boxParent.classList.add('visible_msg');
+      boxParent.classList.remove('invisible_msg');
+    }
+
+    // Adiciona o texto no box informativo
+    const msg = field.parentNode.querySelector('p.msg').innerText;
+
+    messageReceiver.innerText = msg;
+  },
+  validatePeriod(event) {
+    if (document.querySelector('#released_closed').checked) {
+      if (
+        !window.confirm(
+          'Você selecionou a opção "Encerrar" em PERÍODO DE APOSTAS? Isso encerra de forma permanente a cadastro de novas apostas. Você tem certeza disso?',
+        )
+      ) {
+        event.preventDefault();
+      }
+    }
+    return true;
+  },
+};
+
+// --
+// COLOCA DESTAQUE
+// --
+
+function highlightNumbers(winnerResult) {
+  const winnerNumbers = document.querySelectorAll('.winner_result .number');
+  const noDuplicatesDataSet = winnerResult.dataset.noduplicates;
+
+  const arrayNoDuplicates = noDuplicatesDataSet.split(',');
+
+  for (let i = 0; i < winnerNumbers.length; i += 1) {
+    if (arrayNoDuplicates.includes(winnerNumbers[i].innerHTML)) {
+      winnerNumbers[i].classList.add('detach_number');
+    }
+  }
+}
+const winnerResult = document.querySelector('.winner_result');
+if (winnerResult) {
+  highlightNumbers(winnerResult);
+}
+
+// const MenuDrop = {
+//   apply(event, func) {
+//     setTimeout(() => {
+//       // eslint-disable-next-line no-param-reassign
+//       input = MenuDrop[func](event);
+//     }, 1);
+//   },
+//   toogle() {
+//     const subMenu = document.querySelectorAll('.sub_menu');
+
+//     Array.from(subMenu).map(async item => {
+//       // item.classList.toggle('sub_menu_invisible');
+//       if (item.classList.contains('sub_menu_invisible')) {
+//         item.classList.remove('sub_menu_invisible');
+//         item.classList.add('sub_menu_visible');
+//       } else if (item.classList.contains('sub_menu_visible')) {
+//         item.classList.remove('sub_menu_visible');
+//         item.classList.add('sub_menu_invisible');
+//       }
+//       console.log(subMenu);
+//     });
+//   },
+// };

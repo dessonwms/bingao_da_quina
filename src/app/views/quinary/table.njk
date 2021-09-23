@@ -1,0 +1,39 @@
+<div class="tab_table">
+    <h2>SORTEIOS DA QUINA</h2>
+    <table>
+      <tr>
+        <th colspan="2"></th>
+        <th colspan="5">DEZENAS</th>
+        <th colspan="1">AÇÕES</th>
+      </tr>
+      <tr>
+        <th>CONC.</th>
+        <th>DATA</th>
+        <th>1ª</th>
+        <th>2ª</th>
+        <th>3ª</th>
+        <th>4ª</th>
+        <th>5ª</th>
+        <th>EDITAR</th>
+      </tr>
+      <tr>
+        {% for register in quinarys %}
+          <tr>
+            <td class="detach">{{register.contest}}</td>
+            <td>{{register.contestdata}}</td>
+            <td class="td_ball"><div class="ball"><span>{{register.ten_first}}</span></div></td>
+            <td class="td_ball"><div class="ball"><span>{{register.ten_second}}</span></div></td>
+            <td class="td_ball"><div class="ball"><span>{{register.ten_third}}</span></div></td>
+            <td class="td_ball"><div class="ball"><span>{{register.ten_forth}}</span></div></td>
+            <td class="td_ball"><div class="ball"><span>{{register.ten_fifth}}</span></div></td>
+            <td><a href="/quinarys/{{register.id}}/edit"><i class="material-icons">edit</i></a></td>
+          </tr>
+        {% endfor %}
+
+        {% if numRows == 0 %}
+          <tr>
+            <td class="no-register" colspan="8">Não há nenhum sorteio cadastrado no momento.</td>
+          </tr>
+        {% endif %}
+    </table>
+  </div>

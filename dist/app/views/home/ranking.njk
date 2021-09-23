@@ -1,0 +1,58 @@
+<div class="tab_table">
+  <h2>RANKING</h2>
+  <table>
+    <tr>
+      <th colspan="2">GANHADORES</th>
+      <th colspan="2">PREMIAÇÃO {{summary.prizeForTenHits}}</th>
+    </tr>
+    <tr>
+      <th>ACERTOS</th>
+      <th>QTD</th>
+      <th>POR GANHADOR</th>
+      <th>TOTAL</th>
+    </tr>
+    <tr>
+
+    {% if not summary.prizeForTenHits  %}
+      <tr>
+        <td>10</td>
+        <td>0</td>
+        <td>--</td>
+        <td>--</td>
+      </tr>
+    {% endif %}
+
+    {% for ranking in ratings %}
+      <tr>
+        {% if ranking.number_hits == ranking.minimo %}
+          <td>MENOR ACERTO: ( {{ranking.number_hits}} )</td>
+        {% else %}
+          <td>{{ranking.number_hits}}</td>
+        {% endif %}
+
+
+        <td>{{ranking.count}}</td>
+
+        {% if ranking.number_hits == 10 %}
+          <td>{{summary.prizeForTenHits}}</td>
+        {% elif ranking.number_hits == 9 %}
+          <td>{{summary.prizeForNineHits}}</td>
+        {% elif ranking.number_hits == ranking.minimo %}
+          <td>{{summary.prizeMinorHit}}</td>
+        {% else %}
+          <td>--</td>
+        {% endif %}
+
+        {% if ranking.number_hits == 10 %}
+          <td>{{summary.firstPlaceAward}}</td>
+        {% elif ranking.number_hits == 9 %}
+          <td>{{summary.secondPlaceAward}}</td>
+        {% elif ranking.number_hits == ranking.minimo %}
+          <td>{{summary.minorHitAward}}</td>
+        {% else %}
+          <td>--</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </table>
+</div>

@@ -1,38 +1,71 @@
 import PunterModel from '../models/Punter';
 
-import format from '../../lib/utils';
+import format from '../../lib/format';
 
 const PunterValidator = {
   // eslint-disable-next-line consistent-return
   post: async (request: any, response: any, next: any) => {
-    // check if user exists [email]
-    let { phone } = request.body;
-    phone = phone.replace(/\D/g, '');
-    const punter = await PunterModel.findOne({ where: { phone } });
+    try {
+      // check if user exists [email]
+      let { phone } = request.body;
+      phone = phone.replace(/\D/g, '');
+      const punter = await PunterModel.findOne({ where: { phone } });
 
-    console.log(request.body);
+      if (punter) {
+        // PAGINAÇÃO
+        let { page, limit } = request.query;
+        const { filter } = request.query;
 
-    if (punter) {
-      // Retorna lista de Apostadores
-      const results = await PunterModel.all();
-      const punters = results.rows;
+        page = page || 1;
+        limit = limit || 10;
+        const offset = limit * (page - 1);
 
-      // eslint-disable-next-line no-shadow
-      const punterPromise = punters.map(async punter => {
-        // eslint-disable-next-line no-param-reassign
-        punter.phone = format.phone(punter.phone);
-        return punter;
-      });
-      const punterList = await Promise.all(punterPromise);
+        const params = {
+          filter,
+          page,
+          limit,
+          offset,
+          async callback(punters: any) {
+            let total;
 
+            if (punters.count !== 0) {
+              total = punters[0]?.total;
+            } else {
+              total = 0;
+            }
+
+            // Formata o campo de telefone para exibir na tabela
+            const punterPromise = punters.map((punterList: { phone: any }) => {
+              // eslint-disable-next-line no-param-reassign
+              punterList.phone = format.phone(punterList.phone);
+              return punterList;
+            });
+            const punterList = await Promise.all(punterPromise);
+
+            const pagination = {
+              total: Math.ceil(total / limit),
+              page,
+            };
+            return response.render('punter/register', {
+              punter: request.body,
+              pagination,
+              filter,
+              total,
+              punters: punterList,
+              error: 'Esse telefone já pertence a outro usuário!',
+            });
+          },
+        };
+
+        return PunterModel.paginate(params);
+      }
+
+      next();
+    } catch (err) {
       return response.render('punter/register', {
-        punter: request.body,
-        punters: punterList,
-        error: 'Esse telefone já pertence a outro usuário!',
+        error: 'Algum erro aconteceu',
       });
     }
-
-    next();
   },
 };
 

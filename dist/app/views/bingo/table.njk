@@ -1,0 +1,36 @@
+<div class="tab_table">
+        <h2>LISTA DE EDIÇÕES</h2>
+        <table>
+          <tr>
+            <th>EDIÇÃO</th>
+            <th>INICIO</th>
+            <th>FINALIZADO</th>
+            <th>STATUS</th>
+            <th>RESUMO</th>
+          </tr>
+          <tr>
+          {% for register in bingoList %}
+          <tr>
+            <td>{{register.edition}}ª</td>
+            <td>{% if register.start_date != null %} {{register.start_date}} {% else  %} - {% endif %}</td>
+            <td>
+              {% if register.end_date %}
+                {{register.end_date}}
+              {% else %}
+                --
+              {% endif %}</td>
+            <td
+              {% if register.status == "ATIVO" %}
+                class="active"
+              {% else %}
+                class="finished"
+              {% endif %}
+            >{{register.status}}
+            </td>
+            <td><a href="/bingos/{{register.id}}/download">Baixar PDF</a></td>
+          </tr>
+          {% endfor %}
+
+
+        </table>
+      </div>

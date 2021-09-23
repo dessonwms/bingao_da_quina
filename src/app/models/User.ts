@@ -39,7 +39,7 @@ const UserModel = {
 
       const values = [
         data.name,
-        data.phone,
+        data.phone.replace(/\D/g, ''),
         data.email,
         data.level,
         '$2a$08$eeUfUqZd/cPDW80kl9mb6uZpVhEy8J0MqA4HU5vEbFr8R2BVHjpaa',

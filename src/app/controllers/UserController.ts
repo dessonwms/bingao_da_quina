@@ -1,23 +1,23 @@
 import UserModel from '../models/User';
 import UserLevel from '../models/UserLevel';
 
-import format from '../../lib/utils';
+import format from '../../lib/format';
 
 const UserController = {
   async show(request: any, response: any) {
     try {
       // Retorna lista de administradores
       const results = await UserModel.all();
-      const users = results.rows;
+      let users = results.rows;
 
       const usersPromise = users.map(async user => {
         // eslint-disable-next-line no-param-reassign
         user.phone = format.phone(user.phone);
         return user;
       });
-      const lastAdded = await Promise.all(usersPromise);
+      users = await Promise.all(usersPromise);
 
-      return response.render('user/index', { users: lastAdded });
+      return response.render('user/index', { users });
     } catch (err) {
       return response.render('user/index', {
         error: 'Algum erro aconteceu',
@@ -25,36 +25,61 @@ const UserController = {
     }
   },
   async registerForm(request: any, response: any) {
-    // Busca lista de níveis de acesso de usuários
-    const results = await UserLevel.all();
-    const levels = results.rows;
+    try {
+      // Busca lista de níveis de acesso de usuários
+      const results = await UserLevel.all();
+      const levels = results.rows;
 
-    return response.render('user/register', { levels });
+      return response.render('user/register', { levels });
+    } catch (err) {
+      return response.render('user/register', {
+        error: 'Algum erro aconteceu',
+      });
+    }
   },
   async post(request: any, response: any) {
-    // Salva no banco de dados
-    await UserModel.create(request.body);
+    try {
+      // Salva no banco de dados
+      await UserModel.create(request.body);
 
-    // Retorna lista de administradores
-    const results = await UserModel.all();
-    const users = results.rows;
+      // Retorna lista de administradores
+      const results = await UserModel.all();
+      let users = results.rows;
 
-    return response.render('user/index', {
-      users,
-      success: 'Usuário cadastrado com sucesso!',
-    });
+      const usersPromise = users.map(async user => {
+        // eslint-disable-next-line no-param-reassign
+        user.phone = format.phone(user.phone);
+        return user;
+      });
+      users = await Promise.all(usersPromise);
+
+      return response.render('user/index', {
+        users,
+        success: 'Usuário cadastrado com sucesso!',
+      });
+    } catch (err) {
+      return response.render('user/index', {
+        error: 'Algum erro aconteceu',
+      });
+    }
   },
   async edit(request: any, response: any) {
-    let results = await UserModel.find(request.params.id);
-    const user = results.rows[0];
+    try {
+      let results = await UserModel.find(request.params.id);
+      const user = results.rows[0];
 
-    results = await UserLevel.all();
-    const levels = results.rows;
+      results = await UserLevel.all();
+      const levels = results.rows;
 
-    // Formata Phone para mostrar Phone com máscara
-    user.phone = format.phone(user.phone);
+      // Formata Phone para mostrar Phone com máscara
+      user.phone = format.phone(user.phone);
 
-    return response.render('user/edit', { user, levels });
+      return response.render('user/edit', { user, levels });
+    } catch (err) {
+      return response.render('user/edit', {
+        error: 'Algum erro aconteceu',
+      });
+    }
   },
   async update(request: any, response: any) {
     try {
@@ -90,24 +115,30 @@ const UserController = {
         success: 'Conta atualizada com sucesso!',
       });
     } catch (err) {
-      return response.render('user/account', {
+      return response.render('user/index', {
         error: 'Algum erro aconteceu',
       });
     }
   },
   async account(request: any, response: any) {
-    // let results = await UserModel.find(request.params.id);
-    const { userId } = request.session;
-    let results = await UserModel.find(userId);
-    const user = results.rows[0];
+    try {
+      // let results = await UserModel.find(request.params.id);
+      const { userId } = request.session;
+      let results = await UserModel.find(userId);
+      const user = results.rows[0];
 
-    results = await UserLevel.all();
-    const levels = results.rows;
+      results = await UserLevel.all();
+      const levels = results.rows;
 
-    // Formata Phone para mostrar Phone com máscara
-    user.phone = format.phone(user.phone);
+      // Formata Phone para mostrar Phone com máscara
+      user.phone = format.phone(user.phone);
 
-    return response.render('user/account', { user, levels });
+      return response.render('user/account', { user, levels });
+    } catch (err) {
+      return response.render('user/account', {
+        error: 'Algum erro aconteceu',
+      });
+    }
   },
   async updateAccount(request: any, response: any) {
     try {
