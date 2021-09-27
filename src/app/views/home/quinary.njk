@@ -15,16 +15,22 @@
       <th>05</th>
     </tr>
     <tr>
-    {% for quinary in quinarys %}
-      <tr>
-        <td>{{quinary.contest}}</td>
-        <td>{{quinary.contestdata}}</td>
-        <td>{{quinary.ten_first}}</td>
-        <td>{{quinary.ten_second}}</td>
-        <td>{{quinary.ten_third}}</td>
-        <td>{{quinary.ten_forth}}</td>
-        <td>{{quinary.ten_fifth}}</td>
-      </tr>
-    {% endfor %}
+      {% for quinary in quinarys %}
+        <tr>
+          <td>{{quinary.contest}}</td>
+          <td>{{quinary.contestdata}}</td>
+          <td>{{quinary.ten_first}}</td>
+          <td>{{quinary.ten_second}}</td>
+          <td>{{quinary.ten_third}}</td>
+          <td>{{quinary.ten_forth}}</td>
+          <td>{{quinary.ten_fifth}}</td>
+        </tr>
+      {% endfor %}
+
+      {% if quinarysNumRows == 0 %}
+          <tr>
+            <td class="no-register" colspan="8">Não há nenhum sorteio cadastrado no momento.</td>
+          </tr>
+        {% endif %}
   </table>
 </div>

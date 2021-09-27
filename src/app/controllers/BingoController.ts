@@ -91,8 +91,6 @@ const HomeController = {
       const results = await BingoModel.all();
       let bingoList = results.rows;
 
-      console.log(bingoList);
-
       const usersPromise = bingoList.map(async bingos => {
         // eslint-disable-next-line no-param-reassign
         bingos.start_date = format.date(bingos.start_date).ptbr;

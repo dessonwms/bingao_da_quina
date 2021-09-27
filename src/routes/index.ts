@@ -9,10 +9,17 @@ import reports from './reports';
 import HomeController from '../app/controllers/HomeController';
 import Session from '../app/middlewares/session';
 
+import BingoValidator from '../app/validators/BingoValidator';
+
 const routes = Router();
 
 // Home
-routes.get('/', Session.onlyUsers, HomeController.index);
+routes.get(
+  '/',
+  Session.onlyUsers,
+  BingoValidator.filterBingo,
+  HomeController.index,
+);
 
 // Users
 routes.use('/users', users);

@@ -57,8 +57,8 @@ const summaryValues = {
         ranking.push({
           number_hits: i,
           count: '0',
-          minimo: ratings[0].minimo,
-          totalbets: ratings[0].totalbets,
+          minimo: ratings[0]?.minimo,
+          totalbets: ratings[0]?.totalbets,
         });
       }
     }
