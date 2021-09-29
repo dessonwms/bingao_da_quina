@@ -4,3 +4,4 @@ temp/*
 !temp/.gitkeep
 .vscode/
 src/config/db.ts
+src/lib/mailer.ts
