@@ -44,7 +44,7 @@ const SessionController = {
         html: `<h2>Pedeu a chave?</h2>
         <p>Não se preocupe, clique no link abaixo para recuperar sua senha</p>
         <p>
-          <a href="http://localhost:3333/users/password-reset?token=${token}" target="_blank">
+          <a href="https://bingaodaquina.com.br/users/password-reset?token=${token}" target="_blank">
             Recuperar senha
           <a/>
         </p>`,
