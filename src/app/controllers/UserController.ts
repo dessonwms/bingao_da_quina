@@ -84,7 +84,6 @@ const UserController = {
   async update(request: any, response: any) {
     try {
       const { user } = request;
-
       const { name, phone, email, level } = request.body;
 
       await UserModel.update(user.id, {
