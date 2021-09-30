@@ -314,8 +314,6 @@ const PunterController = {
       // Adiciona mascará de phone
       punter.phone = format.phone(punter.phone);
 
-      console.log(punter.id);
-
       // Retorna a lista de apostas do apostador
       results = await BetsModel.searchBetsByBettor(punter.id);
       let bets = results.rows;

@@ -193,6 +193,7 @@ const HomeController = {
       // Retorna a lista dos últimos sorteios da quina
       results = await QuinaryModel.all(bingo.id);
       let quinarys = results.rows;
+
       // Retorna lista com todas as 80 dezenas da Quina
       results = await QuinaryModel.allTen();
       const quinaryTens = results.rows;

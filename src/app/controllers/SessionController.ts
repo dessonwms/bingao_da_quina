@@ -50,7 +50,7 @@ const SessionController = {
         </p>`,
       });
 
-      // Avisar o usuário que enviamos o e-mail
+      // Avisa o usuário que enviamos o e-mail
       return response.render('session/password_forgot', {
         success: 'Verifique seu email para resetar sua senha',
       });

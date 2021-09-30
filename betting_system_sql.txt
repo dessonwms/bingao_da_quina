@@ -128,8 +128,8 @@ CREATE TABLE "quinarys_ten" (
 /////////////////////////////////////////////////
 SCRIPTS DE SUPORTE
 
-// Pega o Serial Sequenci para reiniciar o autoincremente
-select pg_get_serial_sequence('NOME DA TABEL', 'CAMPO DA TABELA');
+// Pega o Serial Sequence para reiniciar o autoincremente
+select pg_get_serial_sequence('NOME DA TABELA', 'CAMPO DA TABELA');
 
 // Reinicia contagem de autoincremente da tabela de usuários
 alter sequence public.NOMEDATABELA_CAMPODATABELA_seq restart with 1
