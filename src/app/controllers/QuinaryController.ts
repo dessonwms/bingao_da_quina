@@ -190,7 +190,7 @@ const PunterController = {
               const fileName = `bingao_da_quina_edicao_${bingo.edition}`;
 
               // DELETA O PDF ANTES DE SALVAR UM NOVO
-              fs.unlinkSync(`${pathPdf}/${fileName}.pdf`);
+              // fs.unlinkSync(`${pathPdf}/${fileName}.pdf`);
 
               const browser = await puppeteer.launch();
               const page = await browser.newPage();
