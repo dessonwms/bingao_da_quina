@@ -184,7 +184,7 @@ const PunterController = {
           } else {
             try {
               // Caminho para salvar o arquivo
-              const pathPdf = path.join(__dirname, '..', '..', '..', 'temp');
+              const pathPdf = path.resolve(__dirname, '..', '..', '..', 'temp');
               // Nome do arquivo PDF
               const fileName = `bingao_da_quina_edicao_${bingo.edition}`;
 
@@ -462,7 +462,7 @@ const PunterController = {
               await browser.close();
             } catch (err) {
               console.log(err);
-              return response.render('quinary/register', {
+              return response.render('quinary/edit', {
                 error: 'Algum erro aconteceu',
               });
             }
