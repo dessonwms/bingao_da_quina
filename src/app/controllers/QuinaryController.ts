@@ -163,7 +163,7 @@ const PunterController = {
       const dataSummary = await summaryValues.generateRankingData(ratings);
 
       // GERA PDF
-      /* nunjucks.render(
+      nunjucks.render(
         'bingo/summary_pdf/index.njk',
         {
           totalRatings: dataSummary.length,
@@ -202,7 +202,7 @@ const PunterController = {
                 printBackground: true,
                 format: 'a4',
                 landscape: false,
-                path: `${pathPdf}/${fileName}.pdf`,
+                // path: `${pathPdf}/${fileName}.pdf`,
                 margin: {
                   top: '20px',
                   bottom: '20px',
@@ -220,7 +220,7 @@ const PunterController = {
             }
           }
         },
-      ); */
+      );
 
       // Verifica se houve ganhador no bingo
       const winner = verifyWinner.hasWinner(bettings, noDuplicates);
