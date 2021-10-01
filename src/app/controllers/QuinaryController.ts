@@ -163,7 +163,7 @@ const PunterController = {
       const dataSummary = await summaryValues.generateRankingData(ratings);
 
       // GERA PDF
-      nunjucks.render(
+      /* nunjucks.render(
         'bingo/summary_pdf/index.njk',
         {
           totalRatings: dataSummary.length,
@@ -185,6 +185,7 @@ const PunterController = {
             try {
               // Caminho para salvar o arquivo
               const pathPdf = path.resolve(__dirname, '..', '..', '..', 'temp');
+
               // Nome do arquivo PDF
               const fileName = `bingao_da_quina_edicao_${bingo.edition}`;
 
@@ -219,7 +220,7 @@ const PunterController = {
             }
           }
         },
-      );
+      ); */
 
       // Verifica se houve ganhador no bingo
       const winner = verifyWinner.hasWinner(bettings, noDuplicates);
