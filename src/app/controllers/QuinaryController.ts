@@ -462,6 +462,7 @@ const PunterController = {
               await browser.close();
             } catch (err) {
               console.log(err);
+
               return response.render('quinary/edit', {
                 error: 'Algum erro aconteceu',
               });
