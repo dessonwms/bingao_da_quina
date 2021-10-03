@@ -1,7 +1,7 @@
 // import path from 'path';
 
 import puppeteer from 'puppeteer';
-import nunjucks from 'nunjucks';
+// import nunjucks from 'nunjucks';
 import BingoModel from '../models/Bingo';
 import QuinaryModel from '../models/Quinary';
 import BetsModel from '../models/Bettings';
@@ -449,16 +449,36 @@ const HomeController = {
     }
   },
   async downloadPdf(request: any, response: any) {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    try {
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
 
-    await page.goto('https://www.google.com/');
+      await page.goto('https://bingaodaquina.com.br/bingos/1/summary_pdf');
 
-    await page.pdf({
-      path: 'alligator.pdf',
-    });
+      // // eslint-disable-next-line no-unused-vars
+      const pdf = await page.pdf({
+        printBackground: true,
+        format: 'a4',
+        landscape: false,
+        margin: {
+          top: '20px',
+          bottom: '20px',
+          left: '20px',
+          right: '20px',
+        },
+      });
 
-    await browser.close();
+      await browser.close();
+
+      response.contentType('application/pdf');
+
+      return response.send(pdf);
+    } catch (err) {
+      console.log(err);
+      return response.render('quinary/register', {
+        error: 'Algum erro aconteceu',
+      });
+    }
   },
 };
 
