@@ -461,11 +461,11 @@ const HomeController = {
 
       await browser.close();
 
-      return true;
+      return response.send('feito');
     } catch (err) {
       console.log(err);
       return response.render('quinary/register', {
-        error: 'Algum erro aconteceu',
+        error: err,
       });
     }
   },
