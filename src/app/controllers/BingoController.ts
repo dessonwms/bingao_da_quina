@@ -449,153 +449,16 @@ const HomeController = {
     }
   },
   async downloadPdf(request: any, response: any) {
-    const { id } = request.params;
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
 
-    let results = await BingoModel.find(id);
-    const bingo = results.rows[0];
+    await page.goto('https://alligator.io/');
 
-    // Retorna a lista dos últimos sorteios
-    results = await QuinaryModel.all(bingo.id);
-    const quinarys = results.rows;
-
-    // Concatena valores dos sorteios retirando as duplicatas
-    const noDuplicates = verifyWinner.concatenateWithoutDuplicates(quinarys);
-
-    // GERA E FORMATA DADOS PARA EXIBIÇÃO NO PDF
-    // Retorna lista com todas as 80 dezenas da Quina
-    results = await QuinaryModel.allTen();
-    const quinaryTens = results.rows;
-    // Retorna o total de apostas registradas no sistema
-    const totalBets = await ReportModel.totalRegister({
-      table: 'bettings',
-      bingoId: bingo.id,
-      limit: 1,
+    await page.pdf({
+      path: 'hello-alligator.pdf',
     });
-    // Retorna os dados de ranking de acertos
-    results = await ReportModel.rankingHome(bingo.id);
-    const ratings = results.rows;
 
-    // Cálculos de resumo do bingo
-    const summary = {
-      totalBets: totalBets.count,
-      valueBets: format.formatPrice(summaryValues.valueBet),
-      grandTotal: format.formatPrice(summaryValues.grandTotal(totalBets.count)),
-      administrationFee: format.formatPrice(
-        summaryValues.administrationFee(
-          summaryValues.grandTotal(totalBets.count),
-        ),
-      ),
-      firstPlaceAward: format.formatPrice(
-        summaryValues.firstPlaceAward(
-          summaryValues.grandTotal(totalBets.count),
-        ),
-      ),
-      secondPlaceAward: format.formatPrice(
-        summaryValues.secondPlaceAward(
-          summaryValues.grandTotal(totalBets.count),
-        ),
-      ),
-      minorHitAward: format.formatPrice(
-        summaryValues.minorHitAward(summaryValues.grandTotal(totalBets.count)),
-      ),
-      prizeTotal: format.formatPrice(
-        summaryValues.prizeTotal(summaryValues.grandTotal(totalBets.count)),
-      ),
-      prizeForTenHits: format.formatPrice(
-        summaryValues.prizePerWinner(
-          ratings,
-          10,
-          summaryValues.firstPlaceAward(
-            summaryValues.grandTotal(totalBets.count),
-          ),
-        ),
-      ),
-      prizeForNineHits: format.formatPrice(
-        summaryValues.prizePerWinner(
-          ratings,
-          9,
-          summaryValues.secondPlaceAward(
-            summaryValues.grandTotal(totalBets.count),
-          ),
-        ),
-      ),
-      prizeMinorHit: format.formatPrice(
-        summaryValues.prizePerWinner(
-          ratings,
-          ratings[0]?.minimo,
-          summaryValues.minorHitAward(
-            summaryValues.grandTotal(totalBets.count),
-          ),
-        ),
-      ),
-    };
-
-    // Retorna lista de todas as apostas referentes a edição atual do Bingo
-    results = await BetsModel.summaryPdf(bingo.id);
-    const bettingsPdf = results.rows;
-
-    // TRATA DADOS PARA EXIBIÇÃO NA TABELA DE RANKING
-    const dataSummary = await summaryValues.generateRankingData(ratings);
-
-    // GERA PDF
-    nunjucks.render(
-      'bingo/summary_pdf/index.njk',
-      {
-        totalRatings: dataSummary.length,
-        ratings,
-        summary,
-        bingo,
-        quinarys,
-        quinaryTens,
-        noDuplicates,
-        globalInfo,
-        dataSummary,
-        bettings: bettingsPdf,
-      },
-      // eslint-disable-next-line consistent-return
-      async (error: any, html: any) => {
-        if (error) {
-          console.log(`Erro: ${error}`);
-        } else {
-          try {
-            const browser = await puppeteer.launch();
-            const page = await browser.newPage();
-
-            await page.goto('https://alligator.io/');
-
-            await page.pdf({
-              path: 'hello-alligator.pdf',
-            });
-
-            // await page.setContent(html);
-
-            // // eslint-disable-next-line no-unused-vars
-            // const pdf = await page.pdf({
-            //   printBackground: true,
-            //   format: 'a4',
-            //   landscape: false,
-            //   margin: {
-            //     top: '20px',
-            //     bottom: '20px',
-            //     left: '20px',
-            //     right: '20px',
-            //   },
-            // });
-
-            await browser.close();
-
-            // response.contentType('application/pdf');
-
-            // return response.send(pdf);
-          } catch (err) {
-            console.log(err);
-            return response.render('quinary/register', {
-              error: 'Algum erro aconteceu',
-            });
-          }
-        }
-      },
-    );
+    await browser.close();
   },
 };
 
