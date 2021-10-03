@@ -453,7 +453,7 @@ const HomeController = {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
 
-      await page.goto('https://bingaodaquina.com.br/bingos/1/summary_pdf');
+      await page.goto('https://bingaodaquina.com.br/');
 
       // // eslint-disable-next-line no-unused-vars
       const pdf = await page.pdf({
