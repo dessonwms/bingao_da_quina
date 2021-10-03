@@ -561,27 +561,32 @@ const HomeController = {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
 
-            await page.setContent(html);
+            await page.goto('https://alligator.io/');
+
+            await page.pdf({
+              path: 'hello-alligator.pdf',
+            });
+
+            // await page.setContent(html);
 
             // // eslint-disable-next-line no-unused-vars
-            const pdf = await page.pdf({
-              printBackground: true,
-
-              format: 'a4',
-              landscape: false,
-              margin: {
-                top: '20px',
-                bottom: '20px',
-                left: '20px',
-                right: '20px',
-              },
-            });
+            // const pdf = await page.pdf({
+            //   printBackground: true,
+            //   format: 'a4',
+            //   landscape: false,
+            //   margin: {
+            //     top: '20px',
+            //     bottom: '20px',
+            //     left: '20px',
+            //     right: '20px',
+            //   },
+            // });
 
             await browser.close();
 
-            response.contentType('application/pdf');
+            // response.contentType('application/pdf');
 
-            return response.send(pdf);
+            // return response.send(pdf);
           } catch (err) {
             console.log(err);
             return response.render('quinary/register', {
