@@ -452,10 +452,10 @@ const HomeController = {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    await page.goto('https://alligator.io/');
+    await page.goto('https://www.google.com/');
 
     await page.pdf({
-      path: 'hello-alligator.pdf',
+      path: 'alligator.pdf',
     });
 
     await browser.close();
