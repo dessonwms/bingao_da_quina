@@ -453,26 +453,15 @@ const HomeController = {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
 
-      await page.goto('https://bingaodaquina.com.br/');
+      await page.goto('https://alligator.io/');
 
-      // // eslint-disable-next-line no-unused-vars
-      const pdf = await page.pdf({
-        printBackground: true,
-        format: 'a4',
-        landscape: false,
-        margin: {
-          top: '20px',
-          bottom: '20px',
-          left: '20px',
-          right: '20px',
-        },
+      await page.pdf({
+        path: 'hello-alligator.pdf',
       });
 
       await browser.close();
 
-      response.contentType('application/pdf');
-
-      return response.send(pdf);
+      return true;
     } catch (err) {
       console.log(err);
       return response.render('quinary/register', {
