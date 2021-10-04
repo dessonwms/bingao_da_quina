@@ -8,7 +8,7 @@
         <th>TÉRMINO</th>
       {% endif %}
       <th>STATUS</th>
-      {% if ratings != 0 %}
+      {% if bingo.summary_pdf != 0 %}
         <th>RESUMO</th>
       {% endif %}
     </tr>
@@ -28,7 +28,8 @@
       >{{bingo.status}}
       </td>
 
-      {% if ratings != 0 %}
+      {# MOSTRA DADOS NA HOME #}
+      {% if bingo.summary_pdf != 0 %}
         <td><a href="/bingos/{{bingo.id}}/download" target="_blank">Baixar PDF</a></td>
       {% endif %}
 

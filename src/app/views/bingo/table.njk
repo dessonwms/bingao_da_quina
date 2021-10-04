@@ -28,8 +28,11 @@
       >{{bingo.status}}
       </td>
 
-      {% if ratings != 0 %}
+      {# MOSTRA DADOS NA LIST DE BINGOS #}
+      {% if bingo.summary_pdf != 0 %}
           <td><a href="/bingos/{{bingo.id}}/download" target="_blank">Baixar PDF</a></td>
+      {% else %}
+        <td> <span> Sem dados</span></td>
       {% endif %}
     </tr>
     {% endfor %}
