@@ -584,26 +584,13 @@ if (winnerResult) {
   highlightNumbers(winnerResult);
 }
 
-// const MenuDrop = {
-//   apply(event, func) {
-//     setTimeout(() => {
-//       // eslint-disable-next-line no-param-reassign
-//       input = MenuDrop[func](event);
-//     }, 1);
-//   },
-//   toogle() {
-//     const subMenu = document.querySelectorAll('.sub_menu');
-
-//     Array.from(subMenu).map(async item => {
-//       // item.classList.toggle('sub_menu_invisible');
-//       if (item.classList.contains('sub_menu_invisible')) {
-//         item.classList.remove('sub_menu_invisible');
-//         item.classList.add('sub_menu_visible');
-//       } else if (item.classList.contains('sub_menu_visible')) {
-//         item.classList.remove('sub_menu_visible');
-//         item.classList.add('sub_menu_invisible');
-//       }
-//       console.log(subMenu);
-//     });
-//   },
-// };
+// --
+// TOGGLE MENU
+// --
+// eslint-disable-next-line prefer-arrow-callback
+$(document).ready(function () {
+  $('.sub_btn').click(function () {
+    $(this).next('.sub_menu').slideToggle();
+    $(this).find('.dropdown').toggleClass('rotate');
+  });
+});

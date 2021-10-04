@@ -8,17 +8,19 @@
     {% endif %}
     <table>
       <tr>
-        <th colspan="1">INFORMAÇÕES</th>
+        <th colspan="2">INFORMAÇÕES</th>
         <th colspan="2">AÇÕES</th>
       </tr>
       <tr>
         <th>APOSTADOR</th>
+        <th>TELEFONE</th>
         <th>EDITAR</th>
         <th>CADASTRAR APOSTA</th>
       </tr>
         {% for register in punters %}
           <tr>
             <td class="detach">{{register.name}} - {{register.surname}}</td>
+            <td class="detach">{{register.phone}}</td>
             <td><a href="/punters/{{register.id}}/edit"><i class="material-icons">edit</i></a></td>
             <td><a href="/bettings/{{register.id}}/register"><i class="material-icons">post_add</i></a></td>
           </tr>

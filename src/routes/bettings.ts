@@ -10,7 +10,7 @@ const routes = Router();
 
 // Página de seleção do apostador
 routes.get(
-  '/',
+  '/add_bet',
   Session.onlyUsers,
   BettingValidator.registrationBlocked,
   BettingsController.selectPunter,

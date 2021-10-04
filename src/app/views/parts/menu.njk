@@ -1,27 +1,33 @@
-<ul>
-  <li class="item_menu"><a class="home" href="/"><i class="material-icons">home</i>HOME</a></li>
+<ul class="menu">
+  <li class="item"><a class="home" href="/"><i class="material-icons">home</i>HOME</a></li>
 
-
-  <li class="item_menu">
-    <a class="link_dropdown" onclick="MenuDrop.apply(event, 'toogle');"><i class="material-icons">people_alt</i>BINGOS</a>
-    <ul class="sub_menu">
-      <li class="subitem"><a href="/bingos"><i class="material-icons">description</i>EDIÇÃO ATUAL</a></li>
-      <li class="subitem"><a href="/bingos/edtion_list"><i class="material-icons">summarize</i>LISTA DE EDIÇÕES</a></li>
-    </ul>
+  <li class="item">
+    <a class="sub_btn"><i class="material-icons">summarize</i>BINGOS<i class="material-icons dropdown">navigate_next</i></a>
+    <div class="sub_menu">
+      <a class="sub_item" href="/bingos/current"><i class="material-icons">description</i>EDIÇÃO ATUAL</a>
+      <a class="sub_item" href="/bingos/edtion_list"><i class="material-icons">format_list_bulleted</i>LISTA DE EDIÇÕES</a>
+    </div>
   </li>
 
-  <li class="item_menu">
-    <a class="link_dropdown" onclick="MenuDrop.apply(event, 'toogle');"><i class="material-icons">people_alt</i>APOSTADOR</a>
-    <ul class="sub_menu">
-      <li class="subitem"><a href="/punters/register"><i class="material-icons">group_add</i>CADASTRAR APOSTADOR</a></li>
-      <li class="subitem"><a href="/punters/search"><i class="material-icons">person_search</i>PESQUISAR APOSTADOR</a></li>
-    </ul>
+  <li class="item">
+    <a class="sub_btn"><i class="material-icons">people_alt</i>APOSTADOR<i class="material-icons dropdown">navigate_next</i></a>
+    <div class="sub_menu">
+      <a class="sub_item" href="/punters/register"><i class="material-icons">group_add</i>ADICIONAR APOSTADOR</a>
+      <a class="sub_item" href="/punters/search"><i class="material-icons">person_search</i>PESQUISAR APOSTADOR</a>
+    </div>
   </li>
 
-  <li class="item_menu"><a href="/bettings"><i class="material-icons">receipt</i>ADICIONAR APOSTA</a></li>
-  <li class="item_menu"><a href="/quinarys/register"><i class="material-icons">adjust</i>SORTEIOS DA QUINA</a></li>
+  <li class="item">
+    <a class="sub_btn"><i class="material-icons">receipt_long</i>APOSTA<i class="material-icons dropdown">navigate_next</i></a>
+    <div class="sub_menu">
+      <a class="sub_item" href="/bettings/add_bet"><i class="material-icons">playlist_add</i>ADICIONAR APOSTA</a>
+      <a class="sub_item" href="/bettings/list_bet"><i class="material-icons">format_list_bulleted</i>LISTA DE APOSTAS</a>
+    </div>
+  </li>
+
+  <li class="item"><a href="/quinarys/register"><i class="material-icons">adjust</i>SORTEIOS DA QUINA</a></li>
   <hr>
-  <li class="item_menu"><a href="/users/account"><i class="material-icons">manage_accounts</i>MINHA CONTA</a></li>
+  <li class="item"><a href="/users/account"><i class="material-icons">manage_accounts</i>MINHA CONTA</a></li>
   <li class="btn_logout">
       <i class="material-icons">logout</i>
       <form action="/users/logout" method="POST">

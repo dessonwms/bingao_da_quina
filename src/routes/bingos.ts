@@ -10,7 +10,7 @@ const routes = Router();
 
 // Formulário de update
 routes.get(
-  '/',
+  '/current',
   Session.onlyUsers,
   BingoValidator.filterBingo,
   BingoController.registerForm,
