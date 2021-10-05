@@ -322,6 +322,7 @@ const PunterController = {
       // Retorna a lista de apostas do apostador
       results = await BetsModel.searchBetsByBettor(bingo.id, punter.id);
       let bets = results.rows;
+      const numBets = results.rowCount;
 
       const usersPromise = bets.map(async bet => {
         // eslint-disable-next-line no-param-reassign
@@ -333,6 +334,7 @@ const PunterController = {
       return response.render('punter/view_bets', {
         punter,
         bets,
+        numBets,
       });
     } catch (err) {
       return response.render('punter/view_bets', {

@@ -92,6 +92,7 @@ const BetsController = {
       // Retorna lista de cotas do apostador
       results = await BetsModel.searchBetsByBettor(bingo.id, punter.id);
       let bets = results.rows;
+      const numBets = results.rowCount;
 
       const usersPromise = bets.map(async bet => {
         // eslint-disable-next-line no-param-reassign
@@ -103,13 +104,13 @@ const BetsController = {
       // Verifica se já existe cotas cadastradas e gera erray para select de cotas
 
       const selectQuotas = selectQuota.filter(bets);
-      console.log(selectQuotas);
 
       return response.render(`betting/register`, {
         userId,
         bingoId: bingo.id,
         punter,
         bets,
+        numBets,
         selectQuotas,
       });
     } catch (err) {
@@ -138,6 +139,7 @@ const BetsController = {
       // Retrona lista de cotas do apostador
       results = await BetsModel.searchBetsByBettor(bingo.id, punter.id);
       let bets = results.rows;
+      const numBets = results.rowCount;
 
       const usersPromise = bets.map(async bet => {
         // eslint-disable-next-line no-param-reassign
@@ -152,6 +154,7 @@ const BetsController = {
         numbers: number,
         punter,
         bets,
+        numBets,
         success: 'Aposta cadastrada com sucesso!',
       });
     } catch (err) {
