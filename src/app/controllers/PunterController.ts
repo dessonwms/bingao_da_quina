@@ -1,5 +1,6 @@
 import PunterModel from '../models/Punter';
 import BetsModel from '../models/Bettings';
+import BingoModel from '../models/Bingo';
 
 import format from '../../lib/format';
 
@@ -308,14 +309,18 @@ const PunterController = {
   },
   async viewBets(request: any, response: any) {
     try {
+      // Retorna o ID do Bingo ativo no momento
+      let results = await BingoModel.findActive();
+      const bingo = results.rows[0];
+
       // Busca os dados do usuário
-      let results = await PunterModel.find(request.params.id);
+      results = await PunterModel.find(request.params.id);
       const punter = results.rows[0];
       // Adiciona mascará de phone
       punter.phone = format.phone(punter.phone);
 
       // Retorna a lista de apostas do apostador
-      results = await BetsModel.searchBetsByBettor(punter.id);
+      results = await BetsModel.searchBetsByBettor(bingo.id, punter.id);
       let bets = results.rows;
 
       const usersPromise = bets.map(async bet => {

@@ -25,8 +25,9 @@ const BetsModel = {
         eighth_ten,
         ninth_ten,
         tenth_ten,
-        payment_status
-    ) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14 )
+        payment_status,
+        quota
+    ) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15 )
     RETURNING id
     `;
 
@@ -45,6 +46,7 @@ const BetsModel = {
         data.number[8],
         data.number[9],
         data.payment_status,
+        data.quota,
       ];
 
       const results = await db.query(query, values);
@@ -55,11 +57,12 @@ const BetsModel = {
       return `Error: ${err}`;
     }
   },
-  searchBetsByBettor(punterId: any) {
+  searchBetsByBettor(bingoId: any, punterId: any) {
     return db.query(`
     SELECT * FROM bettings
     WHERE user_id = ${punterId}
-    ORDER BY updated_at DESC
+    AND bingo_id = ${bingoId}
+    ORDER BY updated_at ASC
     `);
   },
   async paginate(params: any) {

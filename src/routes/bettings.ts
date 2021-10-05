@@ -15,20 +15,23 @@ routes.get(
   BettingValidator.registrationBlocked,
   BettingsController.selectPunter,
 );
-// Formulário de cadastro de Apostador
+// Formulário de cadastro de aposta
 routes.get(
   '/:id/register',
   Session.onlyUsers,
   BettingValidator.registrationBlocked,
   BettingsController.registerForm,
 );
-// Salva o Apostador no Banco
+// Salva o Aposta no Banco
 routes.post(
   '/:id/register',
   Session.onlyUsers,
   BettingValidator.registrationBlocked,
   BettingsController.post,
 );
+
+// Lista de Apostas referente ao bingo ativo
+routes.get('/list_bet', Session.onlyUsers, BettingsController.showAll);
 
 // Mostra mensagem de bloqueio de cadastro de novas apostas
 routes.get(

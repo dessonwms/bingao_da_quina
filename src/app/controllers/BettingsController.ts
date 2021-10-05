@@ -3,6 +3,7 @@ import BetsModel from '../models/Bettings';
 import PunterModel from '../models/Punter';
 
 import format from '../../lib/format';
+import selectQuota from '../../lib/selectQuota';
 
 const BetsController = {
   async selectPunter(request: any, response: any) {
@@ -88,10 +89,28 @@ const BetsController = {
       // Adiciona mascará de phone
       punter.phone = format.phone(punter.phone);
 
+      // Retorna lista de cotas do apostador
+      results = await BetsModel.searchBetsByBettor(bingo.id, punter.id);
+      let bets = results.rows;
+
+      const usersPromise = bets.map(async bet => {
+        // eslint-disable-next-line no-param-reassign
+        bet.created_at = format.date(bet.created_at).extensive;
+        return bet;
+      });
+      bets = await Promise.all(usersPromise);
+
+      // Verifica se já existe cotas cadastradas e gera erray para select de cotas
+
+      const selectQuotas = selectQuota.filter(bets);
+      console.log(selectQuotas);
+
       return response.render(`betting/register`, {
         userId,
         bingoId: bingo.id,
         punter,
+        bets,
+        selectQuotas,
       });
     } catch (err) {
       return response.render('betting/register', {
@@ -116,12 +135,23 @@ const BetsController = {
       // Adiciona mascará de phone
       punter.phone = format.phone(punter.phone);
 
+      // Retrona lista de cotas do apostador
+      results = await BetsModel.searchBetsByBettor(bingo.id, punter.id);
+      let bets = results.rows;
+
+      const usersPromise = bets.map(async bet => {
+        // eslint-disable-next-line no-param-reassign
+        bet.created_at = format.date(bet.created_at).extensive;
+        return bet;
+      });
+      bets = await Promise.all(usersPromise);
+
       return response.render(`betting/receipt`, {
         bingoId: bingo.id,
         userId,
         numbers: number,
         punter,
-        bets: request.body,
+        bets,
         success: 'Aposta cadastrada com sucesso!',
       });
     } catch (err) {
@@ -132,6 +162,14 @@ const BetsController = {
   },
   registrationBlocked(request: any, response: any) {
     return response.render('betting/blocked');
+  },
+  showAll(request: any, response: any) {
+    try {
+      return response.render('betting/list_all.njk');
+    } catch (err) {
+      console.log(`Error: ${err}`);
+      return `Error: ${err}`;
+    }
   },
 };
 

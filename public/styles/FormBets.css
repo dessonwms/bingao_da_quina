@@ -119,7 +119,7 @@
 
 .tab_info .receipt_numbers {
   display: grid;
-  grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+  grid-template-columns: 9% 9% 9% 9% 9% 9% 9% 9% 9% 9% 9%;
   margin-top: 10px;
 }
 
@@ -131,6 +131,11 @@
   padding: 5px 0;
   color: aliceblue;
   font-weight: bold;
+}
+
+.tab_info .receipt_numbers span.detach {
+  color: #994949;
+  border: none;
 }
 
 .tab_info .bettings_punter {
@@ -170,6 +175,7 @@
   color: azure;
   position: relative;
   text-align: center;
+  height: 30px;
 }
 
 #form_bets .bets_buttons {

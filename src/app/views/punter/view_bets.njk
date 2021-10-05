@@ -31,28 +31,28 @@
 
       </div>
 
-      <div class="tab_info">
-        <h3>APOSTAS</h3>
-        {% for bet in bets %}
-          <div class="bettings_punter">
-            <span>Cadastrada em: </span> {{bet.created_at}} <br>
-            <span>Status do Pagamento: </span> {% if bet.payment_status == 'Y' %} Pago {% elif bet.payment_status == 'N' %} Pendente {% endif %}
-            <div class="receipt_numbers">
-              <span>{{bet.first_ten}}</span>
-              <span>{{bet.second_ten}}</span>
-              <span>{{bet.third_ten}}</span>
-              <span>{{bet.forth_ten}}</span>
-              <span>{{bet.fifth_ten}}</span>
-              <span>{{bet.sixth_ten}}</span>
-              <span>{{bet.seventh_ten}}</span>
-              <span>{{bet.eighth_ten}}</span>
-              <span>{{bet.ninth_ten}}</span>
-              <span>{{bet.tenth_ten}}</span>
-
-            </div>
-          </div>
-        {% endfor %}
-      </div>
+      <div class="tab_info" style="margin-top: 30px">
+      <h3 style="margin-bottom: 24px">COTAS JÁ CADASTRADAS</h3>
+      {% for bet in bets %}
+              <div class="bettings_punter">
+                <span>Cadastrada em: </span> {{bet.created_at}} <br>
+                <span>Status do Pagamento: </span> {% if bet.payment_status == 'Y' %} Pago {% elif bet.payment_status == 'N' %} Pendente {% endif %}
+                <div class="receipt_numbers">
+                  <span class="detach">COTA {{bet.quota}}: </span>
+                  <span>{{bet.first_ten}}</span>
+                  <span>{{bet.second_ten}}</span>
+                  <span>{{bet.third_ten}}</span>
+                  <span>{{bet.forth_ten}}</span>
+                  <span>{{bet.fifth_ten}}</span>
+                  <span>{{bet.sixth_ten}}</span>
+                  <span>{{bet.seventh_ten}}</span>
+                  <span>{{bet.eighth_ten}}</span>
+                  <span>{{bet.ninth_ten}}</span>
+                  <span>{{bet.tenth_ten}}</span>
+                </div>
+              </div>
+            {% endfor %}
+    </div>
 
       <div class="tab_info">
         <h3>CADASTRAR NOVA APOSTA PARA ESSE APOSTADOR?</h3>

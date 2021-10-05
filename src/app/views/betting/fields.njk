@@ -1,4 +1,4 @@
-  <form method="POST" action="/bettings/{{userId}}/register" onsubmit="ManageBets.validateForm(event);">
+  <form id="form_register" method="POST" action="/bettings/{{userId}}/register" onsubmit="ManageBets.validateForm(event);">
     <div class="tab_info">
       <h3>DADOS DO APOSTADOR</h3>
       <p><span>Nome: </span>{{punter.name}}</p>
@@ -44,6 +44,18 @@
       </div>
       {# FIM STATUS DO PAGAMENTO #}
 
+      <label for="name">SELECIONE O NÚMERO DA COTA</label>
+      <div class="imput_container input_select">
+        <i class="material-icons">admin_panel_settings</i>
+        <select name="quota" required>
+          <option value="" >Selecione</option>
+          {% for selectQuota in selectQuotas %}
+            <option value="{{selectQuota.number_hits}}">Quota {{selectQuota.number_hits}}</option>
+          {% endfor %}
+        </select>
+        <span class="error"></span>
+      </div>
+
     </div>
 
     <div class="tab_info">
@@ -72,4 +84,27 @@
         <div class="item"><button value="{{number}}" onclick="SelectNumbersBets.apply(event, 'formatBRL')">{{number}}</button></div>
       {% endfor %} #}
   </div>
+</div>
+
+<div class="tab_info" style="margin-top: 30px">
+  <h3 style="margin-bottom: 24px">COTAS JÁ CADASTRADAS</h3>
+  {% for bet in bets %}
+    <div class="bettings_punter">
+      <span>Cadastrada em: </span> {{bet.created_at}} <br>
+      <span>Status do Pagamento: </span> {% if bet.payment_status == 'Y' %} Pago {% elif bet.payment_status == 'N' %} Pendente {% endif %}
+      <div class="receipt_numbers">
+        <span class="detach">COTA {{bet.quota}}: </span>
+        <span>{{bet.first_ten}}</span>
+        <span>{{bet.second_ten}}</span>
+        <span>{{bet.third_ten}}</span>
+        <span>{{bet.forth_ten}}</span>
+        <span>{{bet.fifth_ten}}</span>
+        <span>{{bet.sixth_ten}}</span>
+        <span>{{bet.seventh_ten}}</span>
+        <span>{{bet.eighth_ten}}</span>
+        <span>{{bet.ninth_ten}}</span>
+        <span>{{bet.tenth_ten}}</span>
+      </div>
+    </div>
+  {% endfor %}
 </div>
