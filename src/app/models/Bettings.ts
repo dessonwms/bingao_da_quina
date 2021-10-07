@@ -57,6 +57,9 @@ const BetsModel = {
       return `Error: ${err}`;
     }
   },
+  delete(id: any) {
+    return db.query('DELETE FROM bettings WHERE id = $1', [id]);
+  },
   searchBetsByBettor(bingoId: any, punterId: any) {
     return db.query(`
     SELECT * FROM bettings
@@ -83,12 +86,6 @@ const BetsModel = {
                   LIMIT $1
                   OFFSET $2`;
 
-    //     FROM winners win
-    // INNER JOIN bettings bts ON win.betting_id = bts.id
-
-    // ORDER BY created_at DESC
-    // (SELECT count(*) FROM bettings WHERE bingo_id = ${bingoId}) AS total
-
     db.query(query, [limit, offset], (err, results) => {
       if (err) throw new Error('Database Error!');
 
@@ -110,6 +107,36 @@ const BetsModel = {
     WHERE bts.bingo_id = ${bingoId}
     ORDER BY win.number_hits DESC, usr.name ASC
     `);
+  },
+  async findPunter(bettingId: any) {
+    return db.query(`
+      SELECT
+          bts.*,
+          usr.name, usr.surname, usr.phone
+      FROM bettings bts
+          INNER JOIN users usr ON bts.user_id = usr.id
+      WHERE bts.id = ${bettingId}
+    `);
+  },
+  async update(id: any, fields: any) {
+    let query = 'UPDATE bettings SET';
+
+    Object.keys(fields).map((key, index, array) => {
+      if (index + 1 < array.length) {
+        query = `${query}
+          ${key} = '${fields[key]}',
+        `;
+      } else {
+        query = `${query}
+          ${key} = '${fields[key]}'
+          WHERE id = ${id}
+        `;
+      }
+
+      return true;
+    });
+
+    await db.query(query);
   },
 };
 

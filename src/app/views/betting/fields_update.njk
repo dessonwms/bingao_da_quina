@@ -1,9 +1,9 @@
-  <form id="form_register" method="POST" action="/bettings/{{userId}}/register" onsubmit="ManageBets.validateForm(event);">
+  <form id="form_register" method="POST" action="/bettings/{{betPunter.id}}/edit?_method=PUT" onsubmit="ManageBets.validateForm(event);">
     <div class="tab_info">
       <h3>DADOS DO APOSTADOR</h3>
-      <p><span>Nome: </span>{{punter.name}}</p>
-      <p><span>Referência: </span>{{punter.surname}}</p>
-      <p><span>Telefone: </span>{{punter.phone}}</p>
+      <p><span>Nome: </span>{{betPunter.name}}</p>
+      <p><span>Referência: </span>{{betPunter.surname}}</p>
+      <p><span>Telefone: </span>{{betPunter.phone}}</p>
       <p><span>Valor da aposta: </span>R$ 50,00</p>
 
       {# STATUS DO PAGAMENTO #}
@@ -18,7 +18,7 @@
                 value="Y"
                 id="paid_out"
                 required
-                {% if bingo.payment_status == 'Y' %} checked {% endif %}
+                {% if betPunter.payment_status == 'Y' %} checked {% endif %}
               >
               <span class="error"></span>
             </span>
@@ -33,7 +33,7 @@
                   value="N"
                   id="payment_pending"
                   required
-                  {% if bingo.payment_status == 'N' %} checked {% endif %}
+                  {% if betPunter.payment_status == 'N' %} checked {% endif %}
                 >
                 <span class="error"></span>
               </span>
@@ -50,7 +50,7 @@
         <select name="quota" required>
           <option value="" >Selecione</option>
           {% for selectQuota in selectQuotas %}
-            <option value="{{selectQuota.index}}">Quota {{selectQuota.index}}</option>
+            <option value="{{selectQuota.index}}" {% if betPunter.quota == selectQuota.index %} selected {% endif %}>Quota {{selectQuota.index}}</option>
           {% endfor %}
         </select>
         <span class="error"></span>
@@ -65,13 +65,43 @@
 
           <div class="bets_fields">
             {# BLOCO DE NÚMEROS ADICIONADOS AUTOMATICAMENTE #}
+            <div class="item item-{{betPunter.first_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.first_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.second_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.second_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.third_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.third_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.forth_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.forth_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.fifth_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.fifth_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.sixth_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.sixth_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.seventh_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.seventh_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.eighth_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.eighth_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.ninth_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.ninth_ten}}" readonly="readonly">
+            </div>
+            <div class="item item-{{betPunter.tenth_ten}} item_visible">
+              <input class="input_number" type="text" name="number[]" value="{{betPunter.tenth_ten}}" readonly="readonly">
+            </div>
           </div>
           <div class="bets_buttons">
             <button class="resetFields" onclick="ManageBets.resetFields(event);">Limpar campos</button>
-            <button class="sendNumbers">Cadastrar Aposta</button>
+            <button class="sendNumbers">Atualizar Aposta</button>
           </div>
 
-          <input type="hidden" name="userId" value="{{userId}}">
+          <input type="hidden" name="userId" value="{{betPunter.user_id}}">
           <input type="hidden" name="bingoId" value="{{bingoId}}">
 
       </div>
@@ -79,10 +109,10 @@
   </form>
 
 <div class="tab_info">
-  <div class="bets_numbers">
-      {# {% for number in numbersQuinary %}
-        <div class="item"><button value="{{number}}" onclick="SelectNumbersBets.apply(event, 'formatBRL')">{{number}}</button></div>
-      {% endfor %} #}
+  <div class="bets_numbers"
+    data-selectnumber="{{betPunter.first_ten}},{{betPunter.second_ten}},{{betPunter.third_ten}},{{betPunter.forth_ten}},{{betPunter.fifth_ten}},{{betPunter.sixth_ten}},{{betPunter.seventh_ten}},{{betPunter.eighth_ten}},{{betPunter.ninth_ten}},{{betPunter.tenth_ten}}"
+  >
+
   </div>
 </div>
 
@@ -90,7 +120,7 @@
   <h3 style="margin-bottom: 24px">COTAS JÁ CADASTRADAS</h3>
   {% if numBets > 0 %}
     {% for bet in bets %}
-      <div class="bettings_punter">
+      <div class="bettings_betPunter">
         <span>Cadastrada em: </span> {{bet.created_at}} <br>
         <span>Status do Pagamento: </span> {% if bet.payment_status == 'Y' %} Pago {% elif bet.payment_status == 'N' %} Pendente {% endif %}
         <div class="receipt_numbers">

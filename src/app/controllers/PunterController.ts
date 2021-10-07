@@ -232,7 +232,6 @@ const PunterController = {
       };
       return PunterModel.paginate(params);
     } catch (err) {
-      console.log(`Erro: ${err}`);
       return response.render('punter/edit', {
         error: 'Algum erro aconteceu',
       });

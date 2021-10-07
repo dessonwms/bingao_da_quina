@@ -26,8 +26,9 @@ const ReportController = {
         noDuplicates,
       });
     } catch (err) {
-      console.log(`Error: ${err}`);
-      return `Error: ${err}`;
+      return response.render('report/has_winner.njk', {
+        error: 'Algum erro aconteceu',
+      });
     }
   },
 };

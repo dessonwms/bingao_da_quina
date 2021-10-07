@@ -179,46 +179,46 @@ const PunterController = {
         // eslint-disable-next-line consistent-return
         async (error: any, html: any) => {
           if (error) {
-            console.log(`Erro: ${error}`);
-          } else {
-            try {
-              // Caminho para salvar o arquivo
-              const pathPdf = path.resolve(__dirname, '..', '..', '..', 'temp');
+            return response.render('quinary/register', {
+              error: 'Algum erro aconteceu',
+            });
+          }
+          try {
+            // Caminho para salvar o arquivo
+            const pathPdf = path.resolve(__dirname, '..', '..', '..', 'temp');
 
-              // Nome do arquivo PDF
-              const fileName = `bingao_da_quina_edicao_${bingo.edition}`;
+            // Nome do arquivo PDF
+            const fileName = `bingao_da_quina_edicao_${bingo.edition}`;
 
-              const browser = await puppeteer.launch();
-              const page = await browser.newPage();
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
 
-              await page.setContent(html);
+            await page.setContent(html);
 
-              // eslint-disable-next-line no-unused-vars
-              const pdf = await page.pdf({
-                printBackground: true,
-                format: 'a4',
-                landscape: false,
-                path: `${pathPdf}/${fileName}.pdf`,
-                margin: {
-                  top: '20px',
-                  bottom: '20px',
-                  left: '20px',
-                  right: '20px',
-                },
-              });
+            // eslint-disable-next-line no-unused-vars
+            const pdf = await page.pdf({
+              printBackground: true,
+              format: 'a4',
+              landscape: false,
+              path: `${pathPdf}/${fileName}.pdf`,
+              margin: {
+                top: '20px',
+                bottom: '20px',
+                left: '20px',
+                right: '20px',
+              },
+            });
 
-              await browser.close();
+            await browser.close();
 
-              // Adiciona o nome do arquivo na tabela de bingos
-              await BingoModel.update(bingo.id, {
-                summary_pdf: `${fileName}.pdf`,
-              });
-            } catch (err) {
-              console.log(err);
-              return response.render('quinary/register', {
-                error: 'Algum erro aconteceu',
-              });
-            }
+            // Adiciona o nome do arquivo na tabela de bingos
+            await BingoModel.update(bingo.id, {
+              summary_pdf: `${fileName}.pdf`,
+            });
+          } catch (err) {
+            return response.render('quinary/register', {
+              error: 'Algum erro aconteceu',
+            });
           }
         },
       );
@@ -240,7 +240,6 @@ const PunterController = {
         success: 'Sorteio cadastrado com sucesso!',
       });
     } catch (err) {
-      console.log(err);
       return response.render('quinary/register', {
         error: 'Algum erro aconteceu',
       });
@@ -431,46 +430,45 @@ const PunterController = {
         // eslint-disable-next-line consistent-return
         async (error: any, html: any) => {
           if (error) {
-            console.log(`Erro: ${error}`);
-          } else {
-            try {
-              // Caminho para salvar o arquivo
-              const pathPdf = path.join(__dirname, '..', '..', '..', 'temp');
-              // Nome do arquivo PDF
-              const fileName = `bingao_da_quina_edicao_${bingo.edition}`;
+            return response.render('quinary/edit', {
+              error: 'Algum erro aconteceu',
+            });
+          }
+          try {
+            // Caminho para salvar o arquivo
+            const pathPdf = path.join(__dirname, '..', '..', '..', 'temp');
+            // Nome do arquivo PDF
+            const fileName = `bingao_da_quina_edicao_${bingo.edition}`;
 
-              const browser = await puppeteer.launch();
-              const page = await browser.newPage();
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
 
-              await page.setContent(html);
+            await page.setContent(html);
 
-              // eslint-disable-next-line no-unused-vars
-              const pdf = await page.pdf({
-                printBackground: true,
-                format: 'a4',
-                landscape: false,
-                path: `${pathPdf}/${fileName}.pdf`,
-                margin: {
-                  top: '20px',
-                  bottom: '20px',
-                  left: '20px',
-                  right: '20px',
-                },
-              });
+            // eslint-disable-next-line no-unused-vars
+            const pdf = await page.pdf({
+              printBackground: true,
+              format: 'a4',
+              landscape: false,
+              path: `${pathPdf}/${fileName}.pdf`,
+              margin: {
+                top: '20px',
+                bottom: '20px',
+                left: '20px',
+                right: '20px',
+              },
+            });
 
-              await browser.close();
+            await browser.close();
 
-              // Adiciona o nome do arquivo na tabela de bingos
-              await BingoModel.update(bingo.id, {
-                summary_pdf: `${fileName}.pdf`,
-              });
-            } catch (err) {
-              console.log(err);
-
-              return response.render('quinary/edit', {
-                error: 'Algum erro aconteceu',
-              });
-            }
+            // Adiciona o nome do arquivo na tabela de bingos
+            await BingoModel.update(bingo.id, {
+              summary_pdf: `${fileName}.pdf`,
+            });
+          } catch (err) {
+            return response.render('quinary/edit', {
+              error: 'Algum erro aconteceu',
+            });
           }
         },
       );

@@ -259,8 +259,6 @@
 
 #form_bets .tab_info a {
   display: block;
-  width: 100%;
-  max-width: 400px;
   height: 32px;
   background: #20655d;
   padding: 0 16px;
@@ -274,6 +272,36 @@
   text-decoration: none;
 }
 
+#form_bets .tab_info a.red {
+  background: #994949;
+}
+
 #form_bets .tab_info a:hover {
   background: #25776e;
+}
+
+#form_bets .tab_info a.red:hover {
+  background: #af5555;
+}
+
+/*  */
+.tab_info hr {
+  border: 1px solid rgba(86,186,202,0.1);
+  margin-bottom: 30px;
+}
+
+.bettings_punter .btns {
+  margin: 24px 20px;
+}
+
+.bettings_punter .btns .actions{
+  margin-right: 10px;
+  border: solid 1px blue;
+  display: inline-block;
+  width: 100% !important;
+}
+.bettings_punter .btns>.actions{
+  margin-left: 10px;
+  max-width: 100%;
+  display: inline-block;
 }

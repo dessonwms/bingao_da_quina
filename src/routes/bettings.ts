@@ -30,6 +30,21 @@ routes.post(
   BettingsController.post,
 );
 
+// Formulário de atualização de aposta
+routes.get(
+  '/:id/edit',
+  Session.onlyUsers,
+  BettingValidator.registrationBlocked,
+  BettingsController.edit,
+);
+// Atualiza os dados da Aposta no Banco
+routes.put(
+  '/:id/edit',
+  Session.onlyUsers,
+  BettingValidator.registrationBlocked,
+  BettingsController.update,
+);
+
 // Lista de Apostas referente ao bingo ativo
 routes.get('/list_bet', Session.onlyUsers, BettingsController.showAll);
 
@@ -39,6 +54,9 @@ routes.get(
   Session.onlyUsers,
   BettingsController.registrationBlocked,
 );
+
+// Salva o Aposta no Banco
+routes.get('/:punter/:id/delete', Session.onlyUsers, BettingsController.delete);
 
 // // // Formulário de Edição de Apostador
 // routes.get('/:id/edit', BetsController.edit);

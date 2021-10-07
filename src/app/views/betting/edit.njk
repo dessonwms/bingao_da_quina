@@ -1,0 +1,32 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+
+          <title>Atualizar dados da Aposta</title>
+
+{% endblock %}
+
+{% block title %}
+
+          <h1>ATUALIZAR DADOS DA APOSTA</h1>
+
+          <div class="breadcrumb">
+            <span>
+              HOME
+              <i class="material-icons">chevron_right</i>
+              ATUALIZAR DADOS DA APOSTA
+            </span>
+          </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div id="form_bets">
+
+      {% include 'betting/fields_update.njk' %}
+
+      {# <button type="submit">Cadastrar</button> #}
+    </div>
+
+{% endblock %}

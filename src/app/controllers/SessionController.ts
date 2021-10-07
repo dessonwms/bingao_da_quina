@@ -55,7 +55,6 @@ const SessionController = {
         success: 'Verifique seu email para resetar sua senha',
       });
     } catch (err) {
-      console.log(`Erro: ${err}`);
       return response.render('session/password_forgot', {
         error: 'Erro inesperado, tente novamente!',
       });

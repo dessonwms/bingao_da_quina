@@ -118,8 +118,7 @@ const HomeController = {
         quinarysNumRows,
       });
     } catch (err) {
-      console.log(err);
-      return response.render('quinary/edit', {
+      return response.render('home/index.njk', {
         error: 'Algum erro aconteceu',
       });
     }

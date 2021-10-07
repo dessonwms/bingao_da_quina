@@ -62,7 +62,6 @@ const HomeController = {
         bingoList,
       });
     } catch (err) {
-      console.error(err);
       return response.render('bingo/index', {
         error: 'Algum erro aconteceu',
       });
@@ -115,7 +114,6 @@ const HomeController = {
         success: 'Bingo cadastrado com sucesso!',
       });
     } catch (err) {
-      console.error(err);
       return response.render('bingo/index', {
         error: 'Algum erro aconteceu',
       });
@@ -161,7 +159,6 @@ const HomeController = {
         success: 'Dados atualizados com sucesso!',
       });
     } catch (err) {
-      console.error(err);
       return response.render('bingo/index', {
         error: 'Algum erro aconteceu',
       });
@@ -322,7 +319,6 @@ const HomeController = {
       };
       return BetsModel.paginate(params);
     } catch (err) {
-      console.error(err);
       return response.render('bingo/index', {
         error: 'Algum erro aconteceu',
       });
@@ -440,8 +436,7 @@ const HomeController = {
         globalInfo,
       });
     } catch (err) {
-      console.error(err);
-      return response.render('bingo/summary_pdf/index', {
+      return response.render('bingo/index', {
         error: 'Algum erro aconteceu',
       });
     }

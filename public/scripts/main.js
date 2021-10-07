@@ -359,12 +359,24 @@ if (pagination) {
 // --
 
 // Cria números de 0 a 80 automaticamente
-function createNumbersBet(betsNumbers) {
+function createNumbersBet(betsNumbers, selectNumber = '') {
   let elements = '';
+  let classSelected = '';
+
+  const arrayNumbers = selectNumber.split(',');
+  const intNumbers = arrayNumbers.map(x => +x);
 
   for (let number = 1; number <= 80; number += 1) {
+    const index = intNumbers.indexOf(number);
+
+    if (index > -1) {
+      classSelected = 'selected';
+    } else {
+      classSelected = 'notSelected';
+    }
+
     elements += `<div class="item">
-                    <button class="notSelected"
+                    <button class="${classSelected}"
                       value="${number}"
                       onclick="ManageBets.apply(event, 'selectNumber'); ManageBets.apply(event, 'countFields')"
                     >
@@ -380,7 +392,9 @@ function createNumbersBet(betsNumbers) {
 const betsNumbers = document.querySelector('.bets_numbers');
 
 if (betsNumbers) {
-  createNumbersBet(betsNumbers);
+  const selectNumber = betsNumbers.dataset.selectnumber;
+
+  createNumbersBet(betsNumbers, selectNumber);
 }
 
 const ManageBets = {

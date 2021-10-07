@@ -3,13 +3,13 @@
 // --
 // ADICIONA DESTAQUE A OPÇÃO ATIVA DO MENU
 // --
-const linksMenu = document.querySelectorAll('.default_menu .item_menu');
+const linksMenu = document.querySelectorAll('.default_menu a');
 
 // eslint-disable-next-line no-restricted-globals
 const currentPageURL = location.pathname;
 
 Array.from(linksMenu).map(async item => {
-  const targetURL = item.children[1].href;
+  const targetURL = item.href;
 
   if (currentPageURL !== '/') {
     if (targetURL.indexOf(currentPageURL) !== -1) {
@@ -131,6 +131,9 @@ function ValidateField(field) {
       number: {
         valueMissing: 'Este campo é obrigatório',
         rangeOverflow: 'Digite um número válido',
+      },
+      radio: {
+        valueMissing: 'Você deve selecionar uma das opções',
       },
       // Adicionar mensagem de tratamneto para cada tipo de campo do formulário
     };
@@ -331,11 +334,13 @@ function createPagination(pagination) {
     } else if (page === pageDataSet) {
       elements += `<span class="current">${page}</span>`;
     } else if (name) {
-      elements += `<a href="?page=${page}&searchName=${name}&selectFieldSearch=name">${page}</a>`;
+      elements += `<a href="?page=${page}&searchName=${name}&selectFieldSearch=name#search">${page}</a>`;
     } else if (phone) {
-      elements += `<a href="?page=${page}&searchPhone=${phone}&selectFieldSearch=phone">${page}</a>`;
+      elements += `<a href="?page=${page}&searchPhone=${phone}&selectFieldSearch=phone#search">${page}</a>`;
+    } else if (filter) {
+      elements += `<a class="item" href="?page=${page}&filter=${filter}#search">${page}</a>`;
     } else {
-      elements += `<a class="item" href="?page=${page}&filter=${filter}">${page}</a>`;
+      elements += `<a class="item" href="?page=${page}#search">${page}</a>`;
     }
   }
 
@@ -354,14 +359,14 @@ if (pagination) {
 // --
 
 // Cria números de 0 a 80 automaticamente
-function createNumbersBet(betsNumbers) {
+function createNumbersBet(betsNumbers, arrayNumbers) {
   let elements = '';
 
   for (let number = 1; number <= 80; number += 1) {
     elements += `<div class="item">
                     <button class="notSelected"
                       value="${number}"
-                      onclick="ValidateBets.apply(event, 'selectNumber')"
+                      onclick="ManageBets.apply(event, 'selectNumber'); ManageBets.apply(event, 'countFields')"
                     >
                       ${number}
                     </button>
@@ -375,34 +380,79 @@ function createNumbersBet(betsNumbers) {
 const betsNumbers = document.querySelector('.bets_numbers');
 
 if (betsNumbers) {
-  createNumbersBet(betsNumbers);
+  const selectNumber = betsNumbers.dataset.selectnumber;
+  const arrayNumbers = selectNumber.split(',');
+
+  createNumbersBet(betsNumbers, arrayNumbers);
 }
 
-const ValidateBets = {
+const ManageBets = {
   numbersLimit: 10,
   clickedButton: null,
   betsFields: document.querySelector('.bets_fields'),
   apply(event, func) {
     setTimeout(() => {
       // eslint-disable-next-line no-param-reassign
-      input = ValidateBets[func](event);
+      input = ManageBets[func](event);
     }, 1);
   },
   selectNumber(event) {
     const button = event.target;
     const number = event.target.getAttribute('value');
 
-    const qtdFields = document.querySelectorAll(
-      'input[value][type="text"]:not([value=""])',
-    );
+    const qtdFields = document.querySelectorAll('.input_number');
 
     if (button.classList.contains('notSelected') && qtdFields.length < 10) {
       this.selected(button);
-      ValidateBets.addNumber(number);
+      ManageBets.addNumber(number);
     } else if (button.classList.contains('selected')) {
       this.notSelected(button);
-      ValidateBets.removeNumber(number);
+      ManageBets.removeNumber(number);
     }
+  },
+  addNumber(number) {
+    // Criar div do item
+    const divItem = document.createElement('div');
+    divItem.classList.add('item');
+    divItem.classList.add(`item-${number}`);
+    divItem.classList.add('item_visible');
+
+    // Cria o input que ficará dentro da DIV item
+    const inputNumber = document.createElement('input');
+    inputNumber.classList.add('input_number');
+    inputNumber.setAttribute('type', 'text');
+    inputNumber.setAttribute('name', 'number[]');
+    inputNumber.setAttribute('value', `${number}`);
+    inputNumber.setAttribute('readonly', 'readonly');
+
+    // Adiciona o input dentro na DIV item
+    divItem.appendChild(inputNumber);
+
+    // Adiciona a DIV item dentro da div bets_fields
+    ManageBets.betsFields.appendChild(divItem);
+  },
+  removeNumber(number) {
+    // Seleciona o item para excluir
+    const itemNumber = document.querySelector(`.item-${number}`);
+    itemNumber.classList.add('item_invisible');
+
+    // Remove o item
+    ManageBets.betsFields.removeChild(itemNumber);
+  },
+  changeTitle(msg, attribute = '') {
+    const titleBets = document.querySelector('.title-bets');
+    const spanRemove = document.querySelector('.title-bets span');
+    titleBets.removeChild(spanRemove);
+
+    const spanCreate = document.createElement('span');
+
+    if (attribute !== '') {
+      spanCreate.classList.add(attribute);
+    }
+
+    const textElement = document.createTextNode(msg);
+    spanCreate.appendChild(textElement);
+    titleBets.appendChild(spanCreate);
   },
   selected(input) {
     input.classList.add('selected');
@@ -412,48 +462,138 @@ const ValidateBets = {
     input.classList.add('notSelected');
     input.classList.remove('selected');
   },
-  visible(input) {
-    input.parentNode.classList.add('visible');
-    input.parentNode.classList.remove('invisible');
-  },
-  invisible(input) {
-    input.parentNode.classList.add('invisible');
-    input.parentNode.classList.remove('visible');
-  },
-  addNumber(number) {
-    // const { betsFields } = ValidateBets;
-    const inputs = document.querySelectorAll('.input_number');
+  countFields() {
+    const qtdFields = document.querySelectorAll('.input_number');
+    let msg = '';
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (let i = 0; i <= inputs.length; i += 1) {
-      if (i < ValidateBets.numbersLimit) {
-        if (inputs[i].value === '') {
-          this.visible(inputs[i]);
-          inputs[i].setAttribute('value', number);
-
-          break;
-        }
-      } else {
-        console.log('VocÊ atingiu o numero máximo de números add');
-      }
+    if (qtdFields.length === 0) {
+      msg = `Escolha os 10 números.`;
+      attribute = 'msg-error';
+    } else if (qtdFields.length === 1) {
+      msg = `Foi escolhido ${qtdFields.length} número.`;
+      attribute = 'msg-default';
+    } else if (qtdFields.length > 1 && qtdFields.length < 10) {
+      msg = `Foram escolhidos ${qtdFields.length} números.`;
+      attribute = 'msg-default';
+    } else if (qtdFields.length === 10) {
+      msg = `Clique em "CADASTRAR APOSTA" para finalizar`;
+      attribute = 'msg-success';
     }
+    ManageBets.changeTitle(msg, attribute);
   },
-  removeNumber(number) {
-    // const { betsFields } = ValidateBets;
-    const inputs = document.querySelectorAll('.input_number');
+  resetFields(event) {
+    const { betsFields } = ManageBets;
+    // Remove todos os descendentes da <div class="betsFields">
+    betsFields.innerText = '';
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (let i = 0; i <= inputs.length; i += 1) {
-      if (i < ValidateBets.numbersLimit) {
-        if (inputs[i].value === number) {
-          this.invisible(inputs[i]);
-          inputs[i].removeAttribute('value', number);
+    const betsButtons = document.querySelectorAll('.bets_numbers .item button');
 
-          break;
-        }
-      } else {
-        console.log('VocÊ atingiu o numero máximo de números remove');
+    Array.from(betsButtons).map(async item => {
+      if (item.classList.contains('selected')) {
+        item.classList.remove('selected');
+        item.classList.add('notSelected');
       }
+    });
+    ManageBets.changeTitle('Escolha os 10 números');
+
+    event.preventDefault();
+    return true;
+  },
+  validateForm(event) {
+    const qtdFields = document.querySelectorAll('.input_number');
+
+    if (qtdFields.length < 10) {
+      ManageBets.changeTitle(
+        'Para cadastrar a aposta você deve selecionar os 10 números',
+        'msg-error',
+      );
+
+      event.preventDefault();
+      return true;
     }
+
+    return true;
   },
 };
+
+// --
+// ADICIONA OPÇÃO DE DROPDOWN EM MENUS
+// --
+
+const MsgInput = {
+  apply(event, func) {
+    setTimeout(() => {
+      // eslint-disable-next-line no-param-reassign
+      input = MsgInput[func](event);
+    }, 1);
+  },
+  setMsg(event) {
+    // Input clicado
+    const field = event.target;
+
+    // Receptor da mensagem
+    const messageReceiver = document.querySelector(
+      '.informative .info_input i',
+    );
+
+    // Box Informativo
+    const boxParent = document.querySelector(
+      '.informative .info_input',
+    ).parentNode;
+
+    // Exibe o box da mensagem
+    if (boxParent.classList.contains('invisible_msg')) {
+      boxParent.classList.add('visible_msg');
+      boxParent.classList.remove('invisible_msg');
+    }
+
+    // Adiciona o texto no box informativo
+    const msg = field.parentNode.querySelector('p.msg').innerText;
+
+    messageReceiver.innerText = msg;
+  },
+  validatePeriod(event) {
+    if (document.querySelector('#released_closed').checked) {
+      if (
+        !window.confirm(
+          'Você selecionou a opção "Encerrar" em PERÍODO DE APOSTAS? Isso encerra de forma permanente a cadastro de novas apostas. Você tem certeza disso?',
+        )
+      ) {
+        event.preventDefault();
+      }
+    }
+    return true;
+  },
+};
+
+// --
+// COLOCA DESTAQUE
+// --
+
+function highlightNumbers(winnerResult) {
+  const winnerNumbers = document.querySelectorAll('.winner_result .number');
+  const noDuplicatesDataSet = winnerResult.dataset.noduplicates;
+
+  const arrayNoDuplicates = noDuplicatesDataSet.split(',');
+
+  for (let i = 0; i < winnerNumbers.length; i += 1) {
+    if (arrayNoDuplicates.includes(winnerNumbers[i].innerHTML)) {
+      winnerNumbers[i].classList.add('detach_number');
+    }
+  }
+}
+const winnerResult = document.querySelector('.winner_result');
+if (winnerResult) {
+  highlightNumbers(winnerResult);
+}
+
+// --
+// TOGGLE MENU
+// --
+// eslint-disable-next-line prefer-arrow-callback
+$(document).ready(function () {
+  $('.sub_btn').click(function () {
+    $(this).next('.sub_menu').slideToggle();
+    $(this).find('.dropdown').toggleClass('rotate');
+  });
+});

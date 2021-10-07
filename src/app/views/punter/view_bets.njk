@@ -51,7 +51,12 @@
                 <span>{{bet.ninth_ten}}</span>
                 <span>{{bet.tenth_ten}}</span>
               </div>
+              <div class="btns">
+                <a class="actions" href="/bettings/{{bet.id}}/edit">Alterar Dados da Cota {{bet.quota}}</a>
+                <a class="actions red" href="/bettings/{{punter.id}}/{{bet.id}}/delete" onclick="return confirm('Tem certeza que deseja excluir a cota?')">Excluir Cota {{bet.quota}}</a>
+              </div>
             </div>
+            <hr>
           {% endfor %}
         {% else %}
           <span class="material-icons" style="font-size: 16px; margin-right: 10px;">visibility_off</span>Ainda não há cotas cadastradas para esse apostador!
