@@ -1,9 +1,14 @@
 import BingoModel from '../models/Bingo';
 import BetsModel from '../models/Bettings';
 import PunterModel from '../models/Punter';
+import QuinaryModel from '../models/Quinary';
+import ReportModel from '../models/Report';
 
+import globalInfo from '../../config/globalInfo';
 import format from '../../lib/format';
 import selectQuota from '../../lib/selectQuota';
+import verifyWinner from '../../lib/verifyWinner';
+import summaryValues from '../../lib/summaryValues';
 
 const BetsController = {
   async selectPunter(request: any, response: any) {
@@ -270,11 +275,150 @@ const BetsController = {
   registrationBlocked(request: any, response: any) {
     return response.render('betting/blocked');
   },
-  showAll(request: any, response: any) {
+  async summary(request: any, response: any) {
     try {
-      return response.render('betting/list_all.njk');
+      // Seleciona o último registro de Bingo
+      const bingo = await BingoModel.selectLast({
+        fields: '*',
+        table: 'bingos',
+        orderField: 'id',
+        order: 'DESC',
+        limit: 1,
+      });
+
+      // Retorna a lista dos últimos sorteios da quina
+      let results = await QuinaryModel.all(bingo.id);
+      let quinarys = results.rows;
+
+      // Retorna lista com todas as 80 dezenas da Quina
+      results = await QuinaryModel.allTen();
+      const quinaryTens = results.rows;
+      // Concatena valores dos sorteios retirando as duplicatas
+      const noDuplicates = verifyWinner.concatenateWithoutDuplicates(quinarys);
+      // Altera os valores dos campos que precisam de formatação
+      // eslint-disable-next-line no-shadow
+      const quinarysPromise = quinarys.map(async quinary => {
+        // eslint-disable-next-line no-param-reassign
+        quinary.contestdata = format.date(quinary.contestdata).ptbr;
+        return quinary;
+      });
+      quinarys = await Promise.all(quinarysPromise);
+
+      // Retorna o total de apostas registradas no sistema
+      const totalBets = await ReportModel.totalRegister({
+        table: 'bettings',
+        bingoId: bingo.id,
+        limit: 1,
+      });
+
+      // Retorna os dados de ranking de acertos
+      results = await ReportModel.rankingHome(bingo.id);
+      const ratings = results.rows;
+      // Cálculos de resumo do bingo
+      const summary = {
+        totalBets: totalBets.count,
+        valueBets: format.formatPrice(summaryValues.valueBet),
+        grandTotal: format.formatPrice(
+          summaryValues.grandTotal(totalBets.count),
+        ),
+        administrationFee: format.formatPrice(
+          summaryValues.administrationFee(
+            summaryValues.grandTotal(totalBets.count),
+          ),
+        ),
+        firstPlaceAward: format.formatPrice(
+          summaryValues.firstPlaceAward(
+            summaryValues.grandTotal(totalBets.count),
+          ),
+        ),
+        secondPlaceAward: format.formatPrice(
+          summaryValues.secondPlaceAward(
+            summaryValues.grandTotal(totalBets.count),
+          ),
+        ),
+        minorHitAward: format.formatPrice(
+          summaryValues.minorHitAward(
+            summaryValues.grandTotal(totalBets.count),
+          ),
+        ),
+        prizeTotal: format.formatPrice(
+          summaryValues.prizeTotal(summaryValues.grandTotal(totalBets.count)),
+        ),
+        prizeForTenHits: format.formatPrice(
+          summaryValues.prizePerWinner(
+            ratings,
+            10,
+            summaryValues.firstPlaceAward(
+              summaryValues.grandTotal(totalBets.count),
+            ),
+          ),
+        ),
+        prizeForNineHits: format.formatPrice(
+          summaryValues.prizePerWinner(
+            ratings,
+            9,
+            summaryValues.secondPlaceAward(
+              summaryValues.grandTotal(totalBets.count),
+            ),
+          ),
+        ),
+        prizeMinorHit: format.formatPrice(
+          summaryValues.prizePerWinner(
+            ratings,
+            ratings[0].minimo,
+            summaryValues.minorHitAward(
+              summaryValues.grandTotal(totalBets.count),
+            ),
+          ),
+        ),
+      };
+
+      // TRATA DADOS PARA EXIBIÇÃO NA TABELA DE RANKING
+      const dataSummary = summaryValues.generateRankingData(ratings);
+
+      // PAGINAÇÃO DE APOSTAS
+      let { page } = request.query;
+
+      page = page || 1;
+      const limit = 25;
+      const offset = limit * (page - 1);
+
+      const params = {
+        bingoId: bingo.id,
+        page,
+        limit,
+        offset,
+        async callback(bettings: any) {
+          let total;
+
+          if (bettings.count !== 0) {
+            total = bettings[0]?.total;
+          } else {
+            total = 0;
+          }
+
+          const pagination = { total: Math.ceil(total / limit), page };
+
+          return response.render('betting/list_all', {
+            dataSummary,
+            totalRatings: dataSummary.length,
+            ratings,
+            summary,
+            bingo,
+            quinarys,
+            quinaryTens,
+            noDuplicates,
+            bettings,
+            pagination,
+            total,
+            globalInfo,
+          });
+        },
+      };
+      return BetsModel.paginate(params);
     } catch (err) {
-      return response.render('betting/edit', {
+      console.log(err);
+      return response.render('betting/list_all', {
         error: 'Algum erro aconteceu',
       });
     }

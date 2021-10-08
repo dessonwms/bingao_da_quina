@@ -46,7 +46,7 @@ routes.put(
 );
 
 // Lista de Apostas referente ao bingo ativo
-routes.get('/list_bet', Session.onlyUsers, BettingsController.showAll);
+routes.get('/list_bet', Session.onlyUsers, BettingsController.summary);
 
 // Mostra mensagem de bloqueio de cadastro de novas apostas
 routes.get(

@@ -2,7 +2,7 @@
 
 {% block head %}
 
-          <title>Lista de Apostas</title>
+          <title>Lista de Apostas</title>0
 
 {% endblock %}
 
@@ -22,6 +22,16 @@
 
 {% block content %}
 
+  {# DADOS DA EDIÇÃO #}
+  {% include 'betting/summary_table/edition_data.njk' %}
 
+  {# SORTEIOS DA QUINA #}
+  {% include 'betting/summary_table/corner_draws.njk' %}
+
+  {# DEZENAS SORTEADAS #}
+  {% include 'betting/summary_table/tens_drawn.njk' %}
+
+  {# LISTA DE APOSTADORES #}
+  {% include 'betting/summary_table/list_bettors.njk' %}
 
 {% endblock %}

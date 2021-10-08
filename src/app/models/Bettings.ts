@@ -72,15 +72,17 @@ const BetsModel = {
     const { bingoId, limit, offset, callback } = params;
 
     const query = `SELECT
-                          bts.id AS bts_id,
+                          bts.id AS bts_id, bts.quota,
                           bts.first_ten, bts.second_ten, bts.third_ten, bts.forth_ten, bts.fifth_ten,
                           bts.sixth_ten, bts.seventh_ten, bts.eighth_ten, bts.ninth_ten, bts.tenth_ten,
                           win.id AS win_id, win.number_hits,
                           usr.name, usr.surname,
+                          seller.name AS seller_name,
                           (SELECT count(*) FROM bettings WHERE bingo_id = ${bingoId}) AS total
                   FROM bettings bts
                     INNER JOIN winners win ON win.betting_id = bts.id
                     INNER JOIN users usr ON bts.user_id = usr.id
+                    INNER JOIN users seller ON bts.seller_id = seller.id
                   WHERE bts.bingo_id = ${bingoId}
                   ORDER BY win.number_hits DESC, usr.name ASC
                   LIMIT $1
@@ -95,15 +97,17 @@ const BetsModel = {
   async summaryPdf(bingoId: any) {
     return db.query(`
     SELECT
-          bts.id AS bts_id,
+          bts.id AS bts_id, bts.quota,
           bts.first_ten, bts.second_ten, bts.third_ten, bts.forth_ten, bts.fifth_ten,
           bts.sixth_ten, bts.seventh_ten, bts.eighth_ten, bts.ninth_ten, bts.tenth_ten,
           win.id AS win_id, win.number_hits,
           usr.name, usr.surname,
+          seller.name AS seller_name,
           (SELECT count(*) FROM bettings WHERE bingo_id = ${bingoId}) AS total
     FROM bettings bts
       INNER JOIN winners win ON win.betting_id = bts.id
       INNER JOIN users usr ON bts.user_id = usr.id
+      INNER JOIN users seller ON bts.seller_id = seller.id
     WHERE bts.bingo_id = ${bingoId}
     ORDER BY win.number_hits DESC, usr.name ASC
     `);

@@ -1,0 +1,30 @@
+<div class="tab_table">
+    <h2>SORTEIOS DA QUINA</h2>
+    <table>
+      <tr>
+        <th colspan="2"></th>
+        <th colspan="5">DEZENAS</th>
+      </tr>
+      <tr class="detach">
+        <th>CONC.</th>
+        <th>DATA</th>
+        <th>01</th>
+        <th>02</th>
+        <th>03</th>
+        <th>04</th>
+        <th>05</th>
+      </tr>
+      <tr>
+      {% for quinary in quinarys %}
+      <tr>
+        <td>{{quinary.contest}}</td>
+        <td>{{quinary.contestdata}}</td>
+        <td>{{quinary.ten_first}}</td>
+        <td>{{quinary.ten_second}}</td>
+        <td>{{quinary.ten_third}}</td>
+        <td>{{quinary.ten_forth}}</td>
+        <td>{{quinary.ten_fifth}}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
